@@ -1,9 +1,7 @@
 {
   "defaultSeverity": "error",
   "extends": [
-    "tslint:recommended",
-    "tslint-config-airbnb",
-    "tslint-react"
+    "tslint:recommended"
   ],
   "rules": {
     "indent": [true, "spaces", 4],
@@ -26,7 +24,7 @@
       120
     ],
     "object-literal-sort-keys": false,
-    "object-shorthand-properties-first": false,
+    "object-shorthand-properties-first": true,
     "variable-name": [true, "ban-keywords"],
     "import-name": false,
     "member-access": false,
@@ -47,7 +45,7 @@
     "prefer-object-spread": true,
     "switch-default": true,
     "cyclomatic-complexity": false, // Question
-    "max-file-line-count": [true, 300],
+    "max-file-line-count": [true, 200],
     "no-default-export": true,
     "no-duplicate-imports": true,
     "prefer-const": [true, { "destructuring": "all" }],
@@ -55,36 +53,13 @@
     "binary-expression-operand-order": true,
     "callable-types": true,
     "interface-over-type-literal": true,
-    "newline-per-chained-call": false, // Question
+    "newline-per-chained-call": true,
     "no-consecutive-blank-lines": true,
     "no-unnecessary-callback-wrapper": false,
     "prefer-method-signature": true,
     "prefer-switch": true,
     "prefer-template": true,
     "type-literal-delimiter": true,
-    "ban": [
-      true,
-      {
-        "name": "$",
-        "message": "don`t use jQuery"
-      }
-    ],
-    "react/jsx-curly-spacing": {
-      "when": "never"
-    },
-    "jsx-boolean-value": ["never"],
-    "jsx-no-lambda": false,
-    "react/jsx-key": true,
-    "react/jsx-no-bind": [
-      true,
-      {
-        "allowArrowFunctions": true
-      }
-    ],
-    "jsx-no-multiline-js": true,
-    "jsx-no-string-ref": true,
-    "jsx-space-before-trailing-slash": true,
-    "jsx-wrap-multiline": true,
-    "react/no-access-state-in-setstate": true
+    "quotemark": [true, "single"]
   }
 }
