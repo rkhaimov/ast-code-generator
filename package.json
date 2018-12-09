@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/rkhaimov/ast-code-generator/issues"
   },
-  "homepage": "https://github.com/rkhaimov/ast-code-generator#readme"
+  "homepage": "https://github.com/rkhaimov/ast-code-generator#readme",
+  "devDependencies": {
+    "typescript": "^3.2.2"
+  }
 }
