@@ -19,7 +19,11 @@
   },
   "homepage": "https://github.com/rkhaimov/ast-code-generator#readme",
   "devDependencies": {
+    "@types/escodegen": "0.0.6",
     "tslint": "^5.11.0",
     "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "escodegen": "^1.11.0"
   }
 }
