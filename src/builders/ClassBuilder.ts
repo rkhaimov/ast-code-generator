@@ -23,7 +23,10 @@ class _ClassBuilder implements IClassBuilder {
         type: 'Identifier',
         name: `${name}Repository`,
       },
-      superClass: null,
+      superClass: {
+        type: 'Identifier',
+        name: 'RepositoryBase', // TODO: Replace to class name
+      },
       body: {
         type: 'ClassBody',
         body,

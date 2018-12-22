@@ -1,10 +1,12 @@
+export interface IIdentifier {
+  type: 'Identifier';
+  name: string;
+}
+
 export interface IClassDeclaration {
   type: 'ClassDeclaration';
-  id: {
-    type: 'Identifier';
-    name: string;
-  };
-  superClass: null;
+  id: IIdentifier;
+  superClass: IIdentifier;
   body: {
     type: 'ClassBody';
     body: IMethodDefinition[];
@@ -16,10 +18,7 @@ export interface IMethodDefinition {
   kind: 'method';
   static: boolean;
   computed: boolean;
-  key: {
-    type: 'Identifier';
-    name: string;
-  };
+  key: IIdentifier;
   value: IFunctionExpression;
 }
 
@@ -36,7 +35,5 @@ export interface IFunctionExpression {
   id: null;
 }
 
-export interface IFunctionParam {
-  type: 'Identifier';
-  name: string;
-}
+// tslint:disable-next-line:no-empty-interface
+export interface IFunctionParam extends IIdentifier {}
