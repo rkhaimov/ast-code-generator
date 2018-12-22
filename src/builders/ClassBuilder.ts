@@ -3,7 +3,12 @@ import last from 'lodash/last';
 import isEmpty from 'lodash/isEmpty';
 
 import { ISwagger, ISwaggerMethod, ISwaggerMethodParam, ISwaggerMethods } from '../definitions/swagger';
-import { IClassDeclaration, IFunctionParam, IMethodDefinition } from '../definitions/class/ast';
+import {
+  FunctionExpressionBodyTypes,
+  IClassDeclaration,
+  IFunctionParam,
+  IMethodDefinition,
+} from '../definitions/class/ast';
 
 interface IClassBuilder {
   build(name: string, methods: ISwagger['paths']): IClassDeclaration;
@@ -52,7 +57,7 @@ class _ClassBuilder implements IClassBuilder {
         params: this.buildFunctionParams(method.parameters),
         body: {
           type: 'BlockStatement',
-          body: [],
+          body: this.buildFunctionImplementation(api, operations),
         },
         async: false,
         generator: false,
@@ -73,6 +78,10 @@ class _ClassBuilder implements IClassBuilder {
     };
 
     return [param as IFunctionParam];
+  }
+
+  private buildFunctionImplementation(api: string, operations: ISwaggerMethods): FunctionExpressionBodyTypes[] {
+    return [];
   }
 }
 
