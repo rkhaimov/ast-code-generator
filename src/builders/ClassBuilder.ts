@@ -7,7 +7,7 @@ import {
   FunctionExpressionBodyTypes,
   IClassDeclaration, IFunctionExpression,
   IFunctionParam,
-  IMethodDefinition,
+  IMethodDefinition, IReturnStatement,
 } from '../definitions/class/ast';
 
 interface IClassBuilder {
@@ -63,13 +63,21 @@ class _ClassBuilder implements IClassBuilder {
       params: this.buildFunctionParams(method.parameters),
       body: {
         type: 'BlockStatement',
-        body: this.buildFunctionBody(api, operations),
+        body: [this.buildFunctionBody(api, operations)],
       },
       async: false,
       generator: false,
       expression: false,
       id: null,
     };
+  }
+
+  private buildFunctionBody(api: string, operations: ISwaggerMethods) {
+    if ('get' in operations) {
+      return this.buildGetFunctionBody(api, operations.get);
+    }
+
+    return this.buildPostFunctionBody(api, operations.post);
   }
 
   private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): IFunctionParam[] {
@@ -85,8 +93,72 @@ class _ClassBuilder implements IClassBuilder {
     return [param as IFunctionParam];
   }
 
-  private buildFunctionBody(api: string, operations: ISwaggerMethods): FunctionExpressionBodyTypes[] {
-    return [];
+  private buildPostFunctionBody(api: string, operation: ISwaggerMethod): IReturnStatement {
+    return {
+      type: 'ReturnStatement',
+      argument: {
+        type: 'CallExpression',
+        callee: {
+          type: 'MemberExpression',
+          computed: false,
+          object: {
+            type: 'MemberExpression',
+            object: {
+              type: 'ThisExpression',
+            },
+            computed: false,
+            property: {
+              name: 'http',
+              type: 'Identifier',
+            },
+          },
+          property: {
+            type: 'Identifier',
+            name: 'get',
+          },
+        },
+        arguments: [
+          {
+            type: 'Literal',
+            value: api,
+          },
+        ],
+      },
+    };
+  }
+
+  private buildGetFunctionBody(api: string, operation: ISwaggerMethod): IReturnStatement {
+    return {
+      type: 'ReturnStatement',
+      argument: {
+        type: 'CallExpression',
+        callee: {
+          type: 'MemberExpression',
+          computed: false,
+          object: {
+            type: 'MemberExpression',
+            object: {
+              type: 'ThisExpression',
+            },
+            computed: false,
+            property: {
+              name: 'http',
+              type: 'Identifier',
+            },
+          },
+          property: {
+            type: 'Identifier',
+            name: 'get',
+          },
+        },
+        arguments: [
+          {
+            type: 'Literal',
+            value: api,
+          },
+        ],
+      },
+    };
   }
 }
 
