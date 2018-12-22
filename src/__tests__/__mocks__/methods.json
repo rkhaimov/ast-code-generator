@@ -1,0 +1,12 @@
+{
+  "methods": [
+    {
+      "url": "/api/account",
+      "expectedName": "account"
+    },
+    {
+      "url": "/api/account/signin",
+      "expectedName": "signin"
+    }
+  ]
+}

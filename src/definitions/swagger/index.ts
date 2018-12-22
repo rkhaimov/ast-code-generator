@@ -5,21 +5,18 @@ export interface ISwagger {
     title: string;
   };
   paths: {
-    [path: string]: Partial<ISwaggerPath>;
+    [path: string]: ISwaggerMethods;
   };
   definitions: {
-    [model: string]: ISwaggerDefinition;
+    [model: string]: ISwaggerModel;
   };
   securityDefinitions: {};
   security: object[];
 }
 
-interface ISwaggerPath {
-  get: ISwaggerOperation;
-  post: ISwaggerOperation;
-}
+export type ISwaggerMethods = { get: ISwaggerMethod } | { post: ISwaggerMethod };
 
-interface ISwaggerOperation {
+export interface ISwaggerMethod {
   tags: string[];
   operationId: string;
   consumes: string[];
@@ -28,21 +25,21 @@ interface ISwaggerOperation {
     name: string;
     in: string;
     required: boolean;
-    schema: ISwaggerDefinitionRef | ISwaggerDefinition;
+    schema: ISwaggerModelRef | ISwaggerModel;
   }>;
   responses: {
     200: {
       description: string;
-      schema: ISwaggerDefinitionRef | ISwaggerDefinition;
+      schema: ISwaggerModelRef | ISwaggerModel;
     };
   };
 }
 
-interface ISwaggerDefinitionRef {
+interface ISwaggerModelRef {
   $ref: string;
 }
 
-interface ISwaggerDefinition {
+interface ISwaggerModel {
   type: 'object';
   properties: {
     [property: string]: SwaggerDefinitionPropertyTypes;
@@ -73,5 +70,5 @@ interface ISwaggerBoolean extends ISwaggerPropertyTypeBase {
 interface ISwaggerArray extends ISwaggerPropertyTypeBase  {
   type: 'array';
   uniqueItems: boolean;
-  items: ISwaggerDefinitionRef | ISwaggerDefinition;
+  items: ISwaggerModelRef | ISwaggerModel;
 }
