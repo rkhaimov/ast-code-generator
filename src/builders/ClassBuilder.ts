@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import { ISwagger, ISwaggerMethod, ISwaggerMethodParam, ISwaggerMethods } from '../definitions/swagger';
 import {
   FunctionExpressionBodyTypes,
-  IClassDeclaration,
+  IClassDeclaration, IFunctionExpression,
   IFunctionParam,
   IMethodDefinition,
 } from '../definitions/class/ast';
@@ -40,7 +40,6 @@ class _ClassBuilder implements IClassBuilder {
   }
 
   private buildMethod(api: string, operations: ISwaggerMethods): IMethodDefinition {
-    const method: ISwaggerMethod = 'get' in operations ? operations.get : operations.post;
     const methodName = last<string>(api.split('/'));
 
     return {
@@ -52,18 +51,24 @@ class _ClassBuilder implements IClassBuilder {
         name: methodName!,
         type: 'Identifier',
       },
-      value: {
-        type: 'FunctionExpression',
-        params: this.buildFunctionParams(method.parameters),
-        body: {
-          type: 'BlockStatement',
-          body: this.buildFunctionImplementation(api, operations),
-        },
-        async: false,
-        generator: false,
-        expression: false,
-        id: null,
+      value: this.buildFunctionImplementation(api, operations),
+    };
+  }
+
+  private buildFunctionImplementation(api: string, operations: ISwaggerMethods): IFunctionExpression {
+    const method: ISwaggerMethod = 'get' in operations ? operations.get : operations.post;
+
+    return {
+      type: 'FunctionExpression',
+      params: this.buildFunctionParams(method.parameters),
+      body: {
+        type: 'BlockStatement',
+        body: this.buildFunctionBody(api, operations),
       },
+      async: false,
+      generator: false,
+      expression: false,
+      id: null,
     };
   }
 
@@ -80,7 +85,7 @@ class _ClassBuilder implements IClassBuilder {
     return [param as IFunctionParam];
   }
 
-  private buildFunctionImplementation(api: string, operations: ISwaggerMethods): FunctionExpressionBodyTypes[] {
+  private buildFunctionBody(api: string, operations: ISwaggerMethods): FunctionExpressionBodyTypes[] {
     return [];
   }
 }
