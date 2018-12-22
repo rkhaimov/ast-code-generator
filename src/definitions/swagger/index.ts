@@ -1,4 +1,4 @@
-interface ISwagger {
+export interface ISwagger {
   swagger: string;
   info: {
     version: string;
