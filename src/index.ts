@@ -1,3 +1,4 @@
+import { parse } from '@babel/parser';
 import * as escodegen from 'escodegen';
 
 const code = escodegen.generate({
@@ -7,4 +8,6 @@ const code = escodegen.generate({
   right: { type: 'Literal', value: 2 },
 });
 
-console.log(code);
+const ast = parse(code);
+
+console.log(ast.program.body);
