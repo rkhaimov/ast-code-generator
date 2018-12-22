@@ -16,8 +16,6 @@ describe('Class builder works well when', () => {
   const outClassName = 'AccountRepository';
   const ast = ClassBuilder.build(inClassName, paths as ISwagger['paths']);
 
-  console.log(escodegen.generate(ast));
-
   it('generates proper className', () => {
     expect(ast.id.name).toEqual(outClassName);
   });
@@ -27,5 +25,11 @@ describe('Class builder works well when', () => {
     const expectedMethodNames = map(methodsMock.methods, 'expectedName');
 
     expect(actualMethodNames).toEqual(expectedMethodNames);
+  });
+
+  it('matches giving code style', () => {
+    const code = escodegen.generate(ast);
+
+    expect(code).toMatchSnapshot();
   });
 });
