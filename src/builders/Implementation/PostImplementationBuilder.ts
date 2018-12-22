@@ -1,10 +1,10 @@
 import { BaseImplementationBuilder } from './BaseImplementationBuilder';
 
-import { FunctionExpressionBody, ILiteral } from '../../definitions/class/ast';
+import { BlockStatementBody, ILiteral } from '../../definitions/ast/common';
 import { ISwaggerMethod } from '../../definitions/swagger';
 
 class _PostImplementationBuilder extends BaseImplementationBuilder {
-  buildImplementation(api: string, operation: ISwaggerMethod): FunctionExpressionBody {
+  buildImplementation(api: string, operation: ISwaggerMethod): BlockStatementBody {
     const args = {
       type: 'Literal',
       value: api,

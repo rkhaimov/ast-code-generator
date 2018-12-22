@@ -27,7 +27,7 @@ describe('Class builder works well when', () => {
     expect(actualMethodNames).toEqual(expectedMethodNames);
   });
 
-  it('matches giving code style', () => {
+  it('matches giving ast style', () => {
     const code = escodegen.generate(ast);
 
     expect(code).toMatchSnapshot();

@@ -1,8 +1,9 @@
-import { FunctionExpressionBody, ILiteral, IReturnStatement } from '../../definitions/class/ast';
+import { BlockStatementBody, ILiteral } from '../../definitions/ast/common';
 import { ISwaggerMethod } from '../../definitions/swagger';
+import { IReturnStatement } from '../../definitions/ast/function';
 
 export abstract class BaseImplementationBuilder {
-  abstract buildImplementation(api: string, operation: ISwaggerMethod): FunctionExpressionBody;
+  abstract buildImplementation(api: string, operation: ISwaggerMethod): BlockStatementBody;
 
   buildThisCall(method: string, args: ILiteral[]): IReturnStatement {
     return {

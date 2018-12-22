@@ -3,7 +3,8 @@ import reduce from 'lodash/reduce';
 import { MethodBuilder } from './MethodBuilder';
 
 import { ISwagger } from '../definitions/swagger';
-import { IClassDeclaration, IMethodDefinition } from '../definitions/class/ast';
+import { IMethodDefinition } from '../definitions/ast/method';
+import { IClassDeclaration } from '../definitions/ast/class';
 
 interface IClassBuilder {
   build(name: string, methods: ISwagger['paths']): IClassDeclaration;
@@ -25,7 +26,7 @@ class _ClassBuilder implements IClassBuilder {
       },
       superClass: {
         type: 'Identifier',
-        name: 'RepositoryBase', // TODO: Replace to class name
+        name: 'RepositoryBase', // TODO: Replace to ast name
       },
       body: {
         type: 'ClassBody',

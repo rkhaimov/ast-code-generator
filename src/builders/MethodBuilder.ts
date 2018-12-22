@@ -8,12 +8,9 @@ import { GetImplementationBuilder } from './Implementation/GetImplementationBuil
 import { PostImplementationBuilder } from './Implementation/PostImplementationBuilder';
 
 import { ISwaggerMethod, ISwaggerMethodParam, ISwaggerOperations } from '../definitions/swagger';
-import {
-  FunctionExpressionBody,
-  IFunctionExpression,
-  IFunctionParam,
-  IMethodDefinition,
-} from '../definitions/class/ast';
+import { IMethodDefinition } from '../definitions/ast/method';
+import { IFunctionExpression } from '../definitions/ast/function';
+import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
 
 interface IMethodBuilder {
   buildMethod(api: string, operations: ISwaggerOperations): IMethodDefinition;
@@ -54,7 +51,7 @@ class _MethodBuilder implements IMethodBuilder {
     };
   }
 
-  private buildFunctionBody(api: string, operations: ISwaggerOperations): FunctionExpressionBody {
+  private buildFunctionBody(api: string, operations: ISwaggerOperations): BlockStatementBody {
     if ('get' in operations) {
       return GetImplementationBuilder.buildImplementation(api, operations.get);
     }
@@ -62,7 +59,7 @@ class _MethodBuilder implements IMethodBuilder {
     return PostImplementationBuilder.buildImplementation(api, operations.post);
   }
 
-  private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): IFunctionParam[] {
+  private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): IIdentifier[] {
     if (isEmpty(swaggerParams)) {
       return [];
     }
@@ -72,7 +69,7 @@ class _MethodBuilder implements IMethodBuilder {
       type: 'Identifier',
     };
 
-    return [param as IFunctionParam];
+    return [param as IIdentifier];
   }
 }
 
