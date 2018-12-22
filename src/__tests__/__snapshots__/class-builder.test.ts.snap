@@ -4,9 +4,9 @@ exports[`Class builder works well when matches giving code style 1`] = `
 "class AccountRepository {
     account() {
     }
-    signin(request) {
+    signin(payload) {
     }
-    agreement(Initiator, DeadlineFrom, DeadlineTo, Title, CreatedFrom, CreatedTo, Status, AssignedTo) {
+    agreement(payload) {
     }
 }"
 `;

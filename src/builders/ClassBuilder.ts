@@ -1,5 +1,6 @@
 import reduce from 'lodash/reduce';
 import last from 'lodash/last';
+import isEmpty from 'lodash/isEmpty';
 
 import { ISwagger, ISwaggerMethod, ISwaggerMethodParam, ISwaggerMethods } from '../definitions/swagger';
 import { IClassDeclaration, IFunctionParam, IMethodDefinition } from '../definitions/class/ast';
@@ -59,10 +60,16 @@ class _ClassBuilder implements IClassBuilder {
   }
 
   private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): IFunctionParam[] {
-    return swaggerParams.map<IFunctionParam>((param) => ({
+    if (isEmpty(swaggerParams)) {
+      return [];
+    }
+
+    const param = {
+      name: 'payload',
       type: 'Identifier',
-      name: param.name,
-    }));
+    };
+
+    return [param as IFunctionParam];
   }
 }
 
