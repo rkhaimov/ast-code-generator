@@ -5,7 +5,7 @@ export interface ISwagger {
     title: string;
   };
   paths: {
-    [path: string]: ISwaggerMethods;
+    [path: string]: ISwaggerOperations;
   };
   definitions: {
     [model: string]: ISwaggerModel;
@@ -14,7 +14,7 @@ export interface ISwagger {
   security: object[];
 }
 
-export type ISwaggerMethods = { get: ISwaggerMethod } | { post: ISwaggerMethod };
+export type ISwaggerOperations = { get: ISwaggerMethod } | { post: ISwaggerMethod };
 
 export interface ISwaggerMethodParam {
   name: string;

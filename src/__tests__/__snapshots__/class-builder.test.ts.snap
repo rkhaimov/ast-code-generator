@@ -3,13 +3,13 @@
 exports[`Class builder works well when matches giving code style 1`] = `
 "class AccountRepository extends RepositoryBase {
     account() {
-        return this.http.get('/api/account');
+        return this.get('/api/account');
     }
     signin(payload) {
-        return this.http.get('/api/account/signin');
+        return this.get('/api/account/signin');
     }
     agreement(payload) {
-        return this.http.get('/api/agreement');
+        return this.get('/api/agreement');
     }
 }"
 `;

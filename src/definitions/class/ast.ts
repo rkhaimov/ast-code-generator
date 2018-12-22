@@ -32,13 +32,15 @@ export interface IFunctionExpression {
   params: IFunctionParam[];
   body: {
     type: 'BlockStatement';
-    body: FunctionExpressionBodyTypes[];
+    body: FunctionExpressionBody;
   };
   async: boolean;
   generator: boolean;
   expression: boolean;
   id: null;
 }
+
+export type FunctionExpressionBody = FunctionExpressionBodyTypes[];
 
 export type FunctionExpressionBodyTypes = IReturnStatement;
 
@@ -49,12 +51,7 @@ export interface IReturnStatement {
     callee: {
       type: 'MemberExpression';
       object: {
-        type: 'MemberExpression';
-        object: {
-          type: 'ThisExpression';
-        };
-        computed: false;
-        property: IIdentifier;
+        type: 'ThisExpression';
       };
       computed: false;
       property: IIdentifier;
