@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Class builder works well when matches giving code style 1`] = `
+"class AccountRepository {
+    account() {
+    }
+    signin(request) {
+    }
+    agreement(Initiator, DeadlineFrom, DeadlineTo, Title, CreatedFrom, CreatedTo, Status, AssignedTo) {
+    }
+}"
+`;

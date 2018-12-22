@@ -20,16 +20,23 @@ export interface IMethodDefinition {
     type: 'Identifier';
     name: string;
   };
-  value: {
-    type: 'FunctionExpression';
-    params: [];
-    body: {
-      type: 'BlockStatement';
-      body: [];
-    };
-    async: boolean;
-    generator: boolean;
-    expression: boolean;
-    id: null;
+  value: IFunctionExpression;
+}
+
+export interface IFunctionExpression {
+  type: 'FunctionExpression';
+  params: IFunctionParam[];
+  body: {
+    type: 'BlockStatement';
+    body: [];
   };
+  async: boolean;
+  generator: boolean;
+  expression: boolean;
+  id: null;
+}
+
+export interface IFunctionParam {
+  type: 'Identifier';
+  name: string;
 }

@@ -16,17 +16,19 @@ export interface ISwagger {
 
 export type ISwaggerMethods = { get: ISwaggerMethod } | { post: ISwaggerMethod };
 
+export interface ISwaggerMethodParam {
+  name: string;
+  in: string;
+  required: boolean;
+  schema: ISwaggerModelRef | ISwaggerModel;
+}
+
 export interface ISwaggerMethod {
   tags: string[];
   operationId: string;
   consumes: string[];
   produces: string[];
-  parameters: Array<{
-    name: string;
-    in: string;
-    required: boolean;
-    schema: ISwaggerModelRef | ISwaggerModel;
-  }>;
+  parameters: ISwaggerMethodParam[];
   responses: {
     200: {
       description: string;

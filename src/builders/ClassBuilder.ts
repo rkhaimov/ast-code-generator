@@ -1,8 +1,8 @@
 import reduce from 'lodash/reduce';
 import last from 'lodash/last';
 
-import { ISwagger, ISwaggerMethod, ISwaggerMethods } from '../definitions/swagger';
-import { IClassDeclaration, IMethodDefinition } from '../definitions/class/ast';
+import { ISwagger, ISwaggerMethod, ISwaggerMethodParam, ISwaggerMethods } from '../definitions/swagger';
+import { IClassDeclaration, IFunctionParam, IMethodDefinition } from '../definitions/class/ast';
 
 interface IClassBuilder {
   build(name: string, methods: ISwagger['paths']): IClassDeclaration;
@@ -45,7 +45,7 @@ class _ClassBuilder implements IClassBuilder {
       },
       value: {
         type: 'FunctionExpression',
-        params: [],
+        params: this.buildFunctionParams(method.parameters),
         body: {
           type: 'BlockStatement',
           body: [],
@@ -56,6 +56,13 @@ class _ClassBuilder implements IClassBuilder {
         id: null,
       },
     };
+  }
+
+  private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): IFunctionParam[] {
+    return swaggerParams.map<IFunctionParam>((param) => ({
+      type: 'Identifier',
+      name: param.name,
+    }));
   }
 }
 

@@ -7,6 +7,10 @@
     {
       "url": "/api/account/signin",
       "expectedName": "signin"
+    },
+    {
+      "url": "/api/agreement",
+      "expectedName": "agreement"
     }
   ]
 }
