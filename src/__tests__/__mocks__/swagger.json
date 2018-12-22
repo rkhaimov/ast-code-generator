@@ -1,0 +1,2856 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Internal Agreement System API"
+  },
+  "paths": {
+    "/api/account": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "ApiAccountGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AccountInfo"
+            }
+          }
+        }
+      }
+    },
+    "/api/account/signin": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "ApiAccountSigninPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/SignInRequestModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SignInResponseModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/account/refresh": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "ApiAccountRefreshPost",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SignInResponseModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/account/logout": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "ApiAccountLogoutPost",
+        "consumes": [
+
+        ],
+        "produces": [
+
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/agreement": {
+      "get": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "List Agreements for current user",
+        "operationId": "ApiAgreementGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "Initiator",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "DeadlineFrom",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "DeadlineTo",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "Title",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "CreatedFrom",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "CreatedTo",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "AssignedTo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AgreementModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agreement/list": {
+      "get": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "List Agreements for current user",
+        "operationId": "ApiAgreementListGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "Initiator",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "DeadlineFrom",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "DeadlineTo",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "Title",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "CreatedFrom",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "CreatedTo",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "AssignedTo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AgreementModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agreement/count": {
+      "get": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "Total Agreements tasks for current user",
+        "operationId": "ApiAgreementCountGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "Initiator",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "DeadlineFrom",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "DeadlineTo",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "Title",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "CreatedFrom",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "CreatedTo",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "AssignedTo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/TaskCountModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/agreement/{id}/details": {
+      "get": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "Get Agreement by Id.",
+        "operationId": "ApiAgreementByIdDetailsGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Agreement",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DetailsAgreementModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/agreement/{id}/outcomes": {
+      "get": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "Get all enabled outcomes for Agreement",
+        "operationId": "ApiAgreementByIdOutcomesGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Agreement",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskOutcome"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agreement/{id}/approvers": {
+      "get": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "Get all valid Approvers for Agreement, which can be delegated task",
+        "operationId": "ApiAgreementByIdApproversGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Agreement",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskParticipant"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agreement/{id}/delegate": {
+      "post": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "Delegates the Agreement task.",
+        "operationId": "ApiAgreementByIdDelegatePost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "a",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "request",
+            "in": "body",
+            "description": "User to whom we delegate and comment",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DelegateTaskModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "enum": [
+                "Unavailable",
+                "Success",
+                "CannotObtainLock",
+                "InvalidUser",
+                "Failed",
+                "UndefinedError"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/agreement/{id}/processing": {
+      "post": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "Approve or Reject the Agreement task.",
+        "operationId": "ApiAgreementByIdProcessingPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Agreement task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "request",
+            "in": "body",
+            "description": "Name of assigned outcome and comment",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ProcessingTaskModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "enum": [
+                "Unavailable",
+                "Success",
+                "CannotObtainLock",
+                "InvalidUser",
+                "Failed",
+                "UndefinedError"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/agreement/ping": {
+      "get": {
+        "tags": [
+          "Agreement"
+        ],
+        "summary": "Test request",
+        "operationId": "ApiAgreementPingGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/logger": {
+      "get": {
+        "tags": [
+          "Log"
+        ],
+        "operationId": "LoggerGet",
+        "consumes": [
+
+        ],
+        "produces": [
+
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/outsourcing": {
+      "get": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "List Outsourcing tasks for current user",
+        "operationId": "ApiOutsourcingGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OutsourcingJob"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/outsourcing/list": {
+      "get": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "List Outsourcing tasks for current user",
+        "operationId": "ApiOutsourcingListGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OutsourcingJob"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/outsourcing/count": {
+      "get": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "Total Outsourcing tasks for current user",
+        "operationId": "ApiOutsourcingCountGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/TaskCountModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/outsourcing/{id}/details": {
+      "get": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "Get vacation by Id.",
+        "operationId": "ApiOutsourcingByIdDetailsGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Outsourcing task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/OutsourcingJob"
+            }
+          }
+        }
+      }
+    },
+    "/api/outsourcing/{id}/outcomes": {
+      "get": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "Get all enabled outcomes for Vacation",
+        "operationId": "ApiOutsourcingByIdOutcomesGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Outsourcing task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskOutcome"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/outsourcing/{id}/approvers": {
+      "get": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "Get all valid Approvers for Vacation, which can be delegated task",
+        "operationId": "ApiOutsourcingByIdApproversGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Outsourcing task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskParticipant"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/outsourcing/{id}/delegate": {
+      "post": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "Delegates the job outsourcing task.",
+        "operationId": "ApiOutsourcingByIdDelegatePost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Outsourcing task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "request",
+            "in": "body",
+            "description": "User to whom we delegate and comment",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DelegateTaskModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "enum": [
+                "Unavailable",
+                "Success",
+                "CannotObtainLock",
+                "InvalidUser",
+                "Failed",
+                "UndefinedError"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/outsourcing/{id}/processing": {
+      "post": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "Approve or Reject the outsourcing task.",
+        "operationId": "ApiOutsourcingByIdProcessingPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Outsourcing task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "request",
+            "in": "body",
+            "description": "Name of assigned outcome and comment",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ProcessingJobTaskModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "enum": [
+                "Unavailable",
+                "Success",
+                "CannotObtainLock",
+                "InvalidUser",
+                "Failed",
+                "UndefinedError"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/outsourcing/ping": {
+      "get": {
+        "tags": [
+          "Outsourcing"
+        ],
+        "summary": "Test request",
+        "operationId": "ApiOutsourcingPingGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime": {
+      "get": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "List Overtime tasks for current user",
+        "operationId": "ApiOvertimeGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OvertimeJob"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime/list": {
+      "get": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "List Overtime tasks for current user",
+        "operationId": "ApiOvertimeListGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OvertimeJob"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime/count": {
+      "get": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "Total Overtime tasks for current user",
+        "operationId": "ApiOvertimeCountGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/TaskCountModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime/{id}/details": {
+      "get": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "Get vacation by Id.",
+        "operationId": "ApiOvertimeByIdDetailsGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Overtime task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/OvertimeJob"
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime/{id}/outcomes": {
+      "get": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "Get all enabled outcomes for Vacation",
+        "operationId": "ApiOvertimeByIdOutcomesGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Overtime task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskOutcome"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime/{id}/approvers": {
+      "get": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "Get all valid Approvers for Vacation, which can be delegated task",
+        "operationId": "ApiOvertimeByIdApproversGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Overtime task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskParticipant"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime/{id}/delegate": {
+      "post": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "Delegates the job overtime task.",
+        "operationId": "ApiOvertimeByIdDelegatePost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Overtime task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "request",
+            "in": "body",
+            "description": "User to whom we delegate and comment",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DelegateTaskModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "enum": [
+                "Unavailable",
+                "Success",
+                "CannotObtainLock",
+                "InvalidUser",
+                "Failed",
+                "UndefinedError"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime/{id}/processing": {
+      "post": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "Approve or Reject the overtime task.",
+        "operationId": "ApiOvertimeByIdProcessingPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Overtime task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "request",
+            "in": "body",
+            "description": "Name of assigned outcome and comment",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ProcessingJobTaskModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "enum": [
+                "Unavailable",
+                "Success",
+                "CannotObtainLock",
+                "InvalidUser",
+                "Failed",
+                "UndefinedError"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/overtime/ping": {
+      "get": {
+        "tags": [
+          "Overtime"
+        ],
+        "summary": "Test request",
+        "operationId": "ApiOvertimePingGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/paymentrequest/list": {
+      "get": {
+        "tags": [
+          "PaymentRequest"
+        ],
+        "operationId": "ApiPaymentrequestListGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PaymentRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paymentrequest/{id}/details": {
+      "get": {
+        "tags": [
+          "PaymentRequest"
+        ],
+        "operationId": "ApiPaymentrequestByIdDetailsGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PaymentRequest"
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Full task (all types) list for current user",
+        "operationId": "ApiTasksGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/count": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Total task all types for current user.",
+        "operationId": "ApiTasksCountGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskCountModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/test/ping": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "summary": "Checks the API is working.",
+        "operationId": "ApiTestPingGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/test/authorized": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "summary": "Checks if the caller of the method is authorized and returns the callers's info.",
+        "operationId": "ApiTestAuthorizedGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AppUser"
+            }
+          }
+        }
+      }
+    },
+    "/api/test/error": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "summary": "Throws an exception.",
+        "operationId": "ApiTestErrorGet",
+        "consumes": [
+
+        ],
+        "produces": [
+
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/test/signin": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "summary": "Authorizes user by login/password and creates a very long-term token pair.",
+        "operationId": "ApiTestSigninPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "description": "1",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/SignInRequestModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SignInResponseModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Lists users from AD.",
+        "operationId": "ApiUsersGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/UserListItem"
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "List VACATIONS for current user",
+        "operationId": "ApiVacationGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Vacation"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation/list": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "List VACATIONS for current user",
+        "operationId": "ApiVacationListGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Vacation"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation/count": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Total vacation tasks for current user",
+        "operationId": "ApiVacationCountGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "TaskName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "MinDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "MaxDate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/TaskCountModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation/{id}/details": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Get vacation by Id.",
+        "operationId": "ApiVacationByIdDetailsGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Vacation",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Vacation"
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation/{id}/outcomes": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Get all enabled outcomes for Vacation",
+        "operationId": "ApiVacationByIdOutcomesGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Vacation",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskOutcome"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation/{id}/approvers": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Get all valid Approvers for Vacation, which can be delegated task",
+        "operationId": "ApiVacationByIdApproversGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Vacation",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskParticipant"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation/{id}/delegate": {
+      "post": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Delegates the vacation task.",
+        "operationId": "ApiVacationByIdDelegatePost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "a",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "request",
+            "in": "body",
+            "description": "User to whom we delegate and comment",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DelegateTaskModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "enum": [
+                "Unavailable",
+                "Success",
+                "CannotObtainLock",
+                "InvalidUser",
+                "Failed",
+                "UndefinedError"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation/{id}/processing": {
+      "post": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Approve or Reject the vacation task.",
+        "operationId": "ApiVacationByIdProcessingPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier of Vacation task",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "request",
+            "in": "body",
+            "description": "Name of assigned outcome and comment",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ProcessingTaskModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "enum": [
+                "Unavailable",
+                "Success",
+                "CannotObtainLock",
+                "InvalidUser",
+                "Failed",
+                "UndefinedError"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/vacation/ping": {
+      "get": {
+        "tags": [
+          "Vacation"
+        ],
+        "summary": "Test request",
+        "operationId": "ApiVacationPingGet",
+        "consumes": [
+
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AccountInfo": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      }
+    },
+    "SignInRequestModel": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "SignInResponseModel": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "resultCode": {
+          "enum": [
+            "Success",
+            "InvalidLoginOrPassword"
+          ],
+          "type": "string"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "refreshToken": {
+          "type": "string"
+        }
+      }
+    },
+    "AgreementModel": {
+      "type": "object",
+      "properties": {
+        "taskType": {
+          "enum": [
+            "AllTasks",
+            "Unknown",
+            "Vacation",
+            "Outsourcing",
+            "Overtime",
+            "Agreement",
+            "PaymentRequest"
+          ],
+          "type": "string",
+          "readOnly": true
+        },
+        "initiator": {
+          "type": "string"
+        },
+        "deadline": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creatorEmail": {
+          "type": "string"
+        },
+        "creatorFirstName": {
+          "type": "string"
+        },
+        "creatorLastName": {
+          "type": "string"
+        },
+        "modified": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "assignedTo": {
+          "type": "string"
+        }
+      }
+    },
+    "TaskCountModel": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "AllTasks",
+            "Unknown",
+            "Vacation",
+            "Outsourcing",
+            "Overtime",
+            "Agreement",
+            "PaymentRequest"
+          ],
+          "type": "string"
+        },
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "DetailsAgreementModel": {
+      "type": "object",
+      "properties": {
+        "taskType": {
+          "enum": [
+            "AllTasks",
+            "Unknown",
+            "Vacation",
+            "Outsourcing",
+            "Overtime",
+            "Agreement",
+            "PaymentRequest"
+          ],
+          "type": "string",
+          "readOnly": true
+        },
+        "company": {
+          "type": "string"
+        },
+        "signer": {
+          "type": "string"
+        },
+        "signerEmail": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "initiator": {
+          "type": "string"
+        },
+        "iniciatorEmail": {
+          "type": "string"
+        },
+        "departmentBoss": {
+          "type": "string"
+        },
+        "departmentBossEmail": {
+          "type": "string"
+        },
+        "deadLine": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "afterAgreement": {
+          "type": "string"
+        },
+        "isSignAndSend": {
+          "type": "boolean"
+        },
+        "sendAddress": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "commentary": {
+          "type": "string"
+        },
+        "leadURL": {
+          "type": "string"
+        },
+        "agreementNo": {
+          "type": "string"
+        },
+        "docId": {
+          "type": "string"
+        },
+        "agreementType": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "receiveDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "project": {
+          "type": "string"
+        },
+        "contractDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "counterparty": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "isRegisrty": {
+          "type": "boolean"
+        },
+        "isSendToAgreement": {
+          "type": "boolean"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "paymentPlan": {
+          "type": "boolean"
+        },
+        "paymentStartDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "paymentEndDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "contractType": {
+          "type": "string"
+        },
+        "mainAgreement": {
+          "type": "string"
+        },
+        "attachments": {
+          "uniqueItems": false,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        },
+        "agreementTitle": {
+          "type": "string"
+        },
+        "agreementStatus": {
+          "type": "string"
+        },
+        "assignedToEmail": {
+          "type": "string"
+        },
+        "agreementId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "editorEmail": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creatorEmail": {
+          "type": "string"
+        },
+        "creatorFirstName": {
+          "type": "string"
+        },
+        "creatorLastName": {
+          "type": "string"
+        },
+        "modified": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "assignedTo": {
+          "type": "string"
+        }
+      }
+    },
+    "Attachment": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "linkUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "TaskOutcome": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "TaskParticipant": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "DelegateTaskModel": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "string"
+        }
+      }
+    },
+    "ProcessingTaskModel": {
+      "type": "object",
+      "properties": {
+        "outcomeName": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "string"
+        }
+      }
+    },
+    "OutsourcingJob": {
+      "type": "object",
+      "properties": {
+        "taskType": {
+          "enum": [
+            "AllTasks",
+            "Unknown",
+            "Vacation",
+            "Outsourcing",
+            "Overtime",
+            "Agreement",
+            "PaymentRequest"
+          ],
+          "type": "string",
+          "readOnly": true
+        },
+        "workflowName": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creatorEmail": {
+          "type": "string"
+        },
+        "creatorFirstName": {
+          "type": "string"
+        },
+        "creatorLastName": {
+          "type": "string"
+        },
+        "modified": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "assignedTo": {
+          "type": "string"
+        }
+      }
+    },
+    "ProcessingJobTaskModel": {
+      "type": "object",
+      "properties": {
+        "hours": {
+          "format": "float",
+          "type": "number"
+        },
+        "outcomeName": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "string"
+        }
+      }
+    },
+    "OvertimeJob": {
+      "type": "object",
+      "properties": {
+        "taskType": {
+          "enum": [
+            "AllTasks",
+            "Unknown",
+            "Vacation",
+            "Outsourcing",
+            "Overtime",
+            "Agreement",
+            "PaymentRequest"
+          ],
+          "type": "string",
+          "readOnly": true
+        },
+        "workflowName": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creatorEmail": {
+          "type": "string"
+        },
+        "creatorFirstName": {
+          "type": "string"
+        },
+        "creatorLastName": {
+          "type": "string"
+        },
+        "modified": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "assignedTo": {
+          "type": "string"
+        }
+      }
+    },
+    "PaymentRequest": {
+      "type": "object",
+      "properties": {
+        "payUntilDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "budgetCode": {
+          "type": "string"
+        },
+        "currencyCode": {
+          "type": "string"
+        },
+        "supplier": {
+          "type": "string"
+        },
+        "paymentMethod": {
+          "type": "string"
+        },
+        "invNo": {
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "taskType": {
+          "enum": [
+            "AllTasks",
+            "Unknown",
+            "Vacation",
+            "Outsourcing",
+            "Overtime",
+            "Agreement",
+            "PaymentRequest"
+          ],
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creatorEmail": {
+          "type": "string"
+        },
+        "creatorFirstName": {
+          "type": "string"
+        },
+        "creatorLastName": {
+          "type": "string"
+        },
+        "modified": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "assignedTo": {
+          "type": "string"
+        }
+      }
+    },
+    "TaskModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "taskType": {
+          "enum": [
+            "AllTasks",
+            "Unknown",
+            "Vacation",
+            "Outsourcing",
+            "Overtime",
+            "Agreement",
+            "PaymentRequest"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creatorEmail": {
+          "type": "string"
+        },
+        "creatorFirstName": {
+          "type": "string"
+        },
+        "creatorLastName": {
+          "type": "string"
+        },
+        "modified": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        }
+      }
+    },
+    "AppUser": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "surname": {
+          "type": "string",
+          "readOnly": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UserListItem": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Vacation": {
+      "type": "object",
+      "properties": {
+        "taskType": {
+          "enum": [
+            "AllTasks",
+            "Unknown",
+            "Vacation",
+            "Outsourcing",
+            "Overtime",
+            "Agreement",
+            "PaymentRequest"
+          ],
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creatorEmail": {
+          "type": "string"
+        },
+        "creatorFirstName": {
+          "type": "string"
+        },
+        "creatorLastName": {
+          "type": "string"
+        },
+        "modified": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "assignedTo": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "X-Auth-Token-Access": {
+      "name": "X-Auth-Token-Access",
+      "in": "header",
+      "type": "apiKey"
+    },
+    "X-Auth-Token-Refresh": {
+      "name": "X-Auth-Token-Refresh",
+      "in": "header",
+      "type": "apiKey"
+    }
+  },
+  "security": [
+    {
+      "X-Auth-Token-Access": [
+
+      ],
+      "X-Auth-Token-Refresh": [
+
+      ]
+    }
+  ]
+}

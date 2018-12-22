@@ -53,7 +53,7 @@
     "binary-expression-operand-order": true,
     "callable-types": true,
     "interface-over-type-literal": true,
-    "newline-per-chained-call": true,
+    "newline-per-chained-call": false,
     "no-consecutive-blank-lines": true,
     "no-unnecessary-callback-wrapper": false,
     "prefer-method-signature": true,
