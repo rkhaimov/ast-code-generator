@@ -1,9 +1,9 @@
-import { groupBy } from 'lodash';
+import { groupBy, isEmpty } from 'lodash';
 
-import { BlockStatementBody, ILiteral } from '../../definitions/ast/common';
+import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast/common';
 import { ISwaggerMethod } from '../../definitions/swagger';
 import { ICallExpression, IReturnStatement } from '../../definitions/ast/function';
-import { ArgumentsGroup } from '../../definitions/builders/implementation';
+import { ArgumentsGroup, IOperationArguments } from '../../definitions/builders/implementation';
 
 export abstract class BaseImplementationBuilder {
   abstract operation: string;
@@ -12,14 +12,14 @@ export abstract class BaseImplementationBuilder {
 
   abstract getArguments(url: string, operation: ISwaggerMethod): ICallExpression['arguments'];
 
-  buildReturnStatetment(method: string, args: ICallExpression['arguments']): IReturnStatement {
+  buildReturnStatement(method: string, args: ICallExpression['arguments']): IReturnStatement {
     return {
       type: 'ReturnStatement',
       argument: this.buildsThisCall(method, args),
     };
   }
 
-  buildsThisCall(method: string, args: ICallExpression['arguments']): ICallExpression {
+  protected buildsThisCall(method: string, args: ICallExpression['arguments']): ICallExpression {
     return {
       type: 'CallExpression',
       callee: {
@@ -37,14 +37,53 @@ export abstract class BaseImplementationBuilder {
     };
   }
 
-  getUrlLiteral(url: string): ILiteral {
+  protected buildUrlLiteral(url: string): ILiteral {
     return {
       type: 'Literal',
       value: url,
     };
   }
 
-  getGroupedArguments(operation: ISwaggerMethod): ArgumentsGroup {
-    return groupBy(operation.parameters, 'in') as any as ArgumentsGroup;
+  protected buildPayloadIdentifier(): IIdentifier {
+    return {
+      type: 'Identifier',
+      name: 'payload',
+    };
+  }
+
+  protected buildArguments(url: ILiteral, operation: ISwaggerMethod): IOperationArguments {
+    const groupedArguments = this.getGroupedArguments(operation);
+    const keys = Object.keys(groupedArguments) as Array<keyof ArgumentsGroup>;
+
+    return keys
+      .reduce((acc, key) => {
+        const args = groupedArguments[key];
+
+        if (isEmpty(args)) {
+          return acc;
+        }
+
+        if (key === 'query') {
+          return { ...acc, query: this.buildQueryExpression() };
+        }
+
+        if (key === 'body') {
+          return { ...acc, body: this.buildPayloadIdentifier() };
+        }
+
+        return { ...acc, url: this.buildUrlPath(url) };
+      }, { url } as IOperationArguments);
+  }
+
+  protected buildQueryExpression(): ICallExpression {
+    return this.buildsThisCall('toQuery', [this.buildPayloadIdentifier()]);
+  }
+
+  protected buildUrlPath(url: ILiteral): ICallExpression {
+    return this.buildsThisCall('fillPath', [url, this.buildPayloadIdentifier()]);
+  }
+
+  private getGroupedArguments(operation: ISwaggerMethod): ArgumentsGroup {
+    return groupBy(operation.parameters, 'in') as ArgumentsGroup;
   }
 }

@@ -14,7 +14,7 @@ export interface IFunctionExpression {
 export interface ICallExpression {
   type: 'CallExpression';
   callee: IMemberExpression;
-  arguments: Array<ILiteral | IIdentifier | ITemplateLiteral>;
+  arguments: Array<ILiteral | IIdentifier | ITemplateLiteral | ICallExpression>;
 }
 
 export interface IReturnStatement {

@@ -9,10 +9,10 @@ exports[`Class builder works well when matches giving code style 1`] = `
         return this.post('/api/account/signin', payload);
     }
     agreement(payload) {
-        return this.get(\`/api/agreement\${ this.toQuery(payload) }\`);
+        return this.get(\`\${ '/api/agreement' }\${ this.toQuery(payload) }\`);
     }
     details(payload) {
-        return this.get(\`/api/agreement/{id}/details\${ this.toQuery(payload) }\`);
+        return this.get(this.fillPath('/api/agreement/{id}/details', payload));
     }
 }"
 `;

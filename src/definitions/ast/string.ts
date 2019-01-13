@@ -1,4 +1,5 @@
 import { ICallExpression } from './function';
+import { ILiteral } from './common';
 
 interface ITemplateElement {
   type: 'TemplateElement';
@@ -11,6 +12,6 @@ interface ITemplateElement {
 
 export interface ITemplateLiteral {
   type: 'TemplateLiteral';
-  expressions: ICallExpression[];
+  expressions: Array<ICallExpression | ILiteral>;
   quasis: ITemplateElement[];
 }
