@@ -31,27 +31,6 @@ export class _GetImplementationBuilder extends BaseImplementationBuilder {
 
     return [this.buildTemplate([url, query])];
   }
-
-  buildTemplate(expressions: [ICallExpression | ILiteral, ICallExpression]): ITemplateLiteral {
-    const element: ITemplateLiteral['quasis'][0] = {
-      type: 'TemplateElement',
-      value: {
-        raw: '',
-        cooked: '',
-      },
-      tail: false,
-    };
-
-    return {
-      type: 'TemplateLiteral',
-      expressions,
-      quasis: [
-        element,
-        element,
-        { ...element, tail: true },
-      ],
-    };
-  }
 }
 
 export const GetImplementationBuilder = new _GetImplementationBuilder();

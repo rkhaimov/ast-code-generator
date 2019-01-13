@@ -1,8 +1,8 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, isNil, compact } from 'lodash';
 
 import { BaseImplementationBuilder } from '../BaseImplementationBuilder';
 
-import { BlockStatementBody, IIdentifier } from '../../../definitions/ast/common';
+import { BlockStatementBody } from '../../../definitions/ast/common';
 import { ISwaggerMethod } from '../../../definitions/swagger';
 import { ICallExpression } from '../../../definitions/ast/function';
 
@@ -15,19 +15,22 @@ export class _PostImplementationBuilder extends BaseImplementationBuilder {
     return [call];
   }
 
-  getArguments(url: string, operation: ISwaggerMethod): ICallExpression['arguments'] {
-    const urlLiteral = this.buildUrlLiteral(url);
+  getArguments(apiUrl: string, operation: ISwaggerMethod): ICallExpression['arguments'] {
+    const urlLiteral = this.buildUrlLiteral(apiUrl);
 
     if (isEmpty(operation.parameters)) {
       return [urlLiteral];
     }
 
-    const payload: IIdentifier = {
-      type: 'Identifier',
-      name: 'payload',
-    };
+    const { body, url, query } = this.buildArguments(urlLiteral, operation);
 
-    return [urlLiteral, payload];
+    if (isNil(query)) {
+      return compact([url, body]);
+    }
+
+    const template = this.buildTemplate([url, query]);
+
+    return compact([template, body]);
   }
 }
 

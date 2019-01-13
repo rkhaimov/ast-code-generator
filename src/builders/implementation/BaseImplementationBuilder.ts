@@ -4,6 +4,7 @@ import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast
 import { ISwaggerMethod } from '../../definitions/swagger';
 import { ICallExpression, IReturnStatement } from '../../definitions/ast/function';
 import { ArgumentsGroup, IOperationArguments } from '../../definitions/builders/implementation';
+import { ITemplateLiteral } from '../../definitions/ast/string';
 
 export abstract class BaseImplementationBuilder {
   abstract operation: string;
@@ -81,6 +82,27 @@ export abstract class BaseImplementationBuilder {
 
   protected buildUrlPath(url: ILiteral): ICallExpression {
     return this.buildsThisCall('fillPath', [url, this.buildPayloadIdentifier()]);
+  }
+
+  protected buildTemplate(expressions: [ICallExpression | ILiteral, ICallExpression]): ITemplateLiteral {
+    const element: ITemplateLiteral['quasis'][0] = {
+      type: 'TemplateElement',
+      value: {
+        raw: '',
+        cooked: '',
+      },
+      tail: false,
+    };
+
+    return {
+      type: 'TemplateLiteral',
+      expressions,
+      quasis: [
+        element,
+        element,
+        { ...element, tail: true },
+      ],
+    };
   }
 
   private getGroupedArguments(operation: ISwaggerMethod): ArgumentsGroup {

@@ -14,5 +14,8 @@ exports[`Class builder works well when matches giving code style 1`] = `
     details(payload) {
         return this.get(this.fillPath('/api/agreement/{id}/details', payload));
     }
+    delegate(payload) {
+        return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), payload);
+    }
 }"
 `;
