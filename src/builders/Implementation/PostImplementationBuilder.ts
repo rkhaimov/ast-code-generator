@@ -6,9 +6,11 @@ import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast
 import { ISwaggerMethod } from '../../definitions/swagger';
 import { ICallExpression } from '../../definitions/ast/function';
 
-class _PostImplementationBuilder extends BaseImplementationBuilder {
+export class _PostImplementationBuilder extends BaseImplementationBuilder {
+  operation = 'post';
+
   buildImplementation(url: string, operation: ISwaggerMethod): BlockStatementBody {
-    const call = this.buildReturnStatetment('post', this.getArguments(url, operation));
+    const call = this.buildReturnStatetment(this.operation, this.getArguments(url, operation));
 
     return [call];
   }

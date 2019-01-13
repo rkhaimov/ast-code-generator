@@ -7,6 +7,7 @@ import { ISwaggerMethod, ISwaggerMethodParam, ISwaggerOperations } from '../defi
 import { IMethodDefinition } from '../definitions/ast/method';
 import { IFunctionExpression } from '../definitions/ast/function';
 import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
+import { PutImplementationBuilder } from './Implementation/PutImplementationBuilder';
 
 interface IMethodBuilder {
   buildMethod(api: string, operations: ISwaggerOperations): IMethodDefinition;
@@ -52,7 +53,19 @@ class _MethodBuilder implements IMethodBuilder {
       return GetImplementationBuilder.buildImplementation(api, operations.get);
     }
 
-    return PostImplementationBuilder.buildImplementation(api, operations.post);
+    if ('post' in operations) {
+      return PostImplementationBuilder.buildImplementation(api, operations.post);
+    }
+
+    if ('put' in operations) {
+      return PutImplementationBuilder.buildImplementation(api, operations.put);
+    }
+
+    if ('delete' in operations) {
+      return PutImplementationBuilder.buildImplementation(api, operations.delete);
+    }
+
+    throw new Error(`Unknown operation(s) was provided ${keys(operations)}`);
   }
 
   private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): IIdentifier[] {

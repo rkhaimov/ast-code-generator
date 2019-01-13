@@ -7,9 +7,11 @@ import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast
 import { ICallExpression } from '../../definitions/ast/function';
 import { ITemplateLiteral } from '../../definitions/ast/string';
 
-class _GetImplementationBuilder extends BaseImplementationBuilder {
+export class _GetImplementationBuilder extends BaseImplementationBuilder {
+  operation = 'get';
+
   buildImplementation(url: string, operation: ISwaggerMethod): BlockStatementBody {
-    const call = this.buildReturnStatetment('get', this.getArguments(url, operation));
+    const call = this.buildReturnStatetment(this.operation, this.getArguments(url, operation));
 
     return [call];
   }

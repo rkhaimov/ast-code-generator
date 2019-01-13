@@ -14,7 +14,11 @@ export interface ISwagger {
   security: object[];
 }
 
-export type ISwaggerOperations = { get: ISwaggerMethod } | { post: ISwaggerMethod };
+export type ISwaggerOperations =
+  { get: ISwaggerMethod }
+  | { post: ISwaggerMethod }
+  | { delete: ISwaggerMethod }
+  | { put: ISwaggerMethod };
 
 export interface ISwaggerMethodParam {
   name: string;

@@ -3,6 +3,8 @@ import { ISwaggerMethod } from '../../definitions/swagger';
 import { ICallExpression, IReturnStatement } from '../../definitions/ast/function';
 
 export abstract class BaseImplementationBuilder {
+  abstract operation: string;
+
   abstract buildImplementation(api: string, operation: ISwaggerMethod): BlockStatementBody;
 
   abstract getArguments(url: string, operation: ISwaggerMethod): ICallExpression['arguments'];
