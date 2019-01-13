@@ -11,5 +11,8 @@ exports[`Class builder works well when matches giving code style 1`] = `
     agreement(payload) {
         return this.get(\`/api/agreement\${ this.toQuery(payload) }\`);
     }
+    details(payload) {
+        return this.get(\`/api/agreement/{id}/details\${ this.toQuery(payload) }\`);
+    }
 }"
 `;

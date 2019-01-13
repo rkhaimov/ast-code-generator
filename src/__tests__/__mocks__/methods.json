@@ -11,6 +11,10 @@
     {
       "url": "/api/agreement",
       "expectedName": "agreement"
+    },
+    {
+      "url": "/api/agreement/{id}/details",
+      "expectedName": "details"
     }
   ]
 }

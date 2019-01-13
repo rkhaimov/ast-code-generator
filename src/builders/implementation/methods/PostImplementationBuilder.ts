@@ -1,10 +1,10 @@
 import { isEmpty } from 'lodash';
 
-import { BaseImplementationBuilder } from './BaseImplementationBuilder';
+import { BaseImplementationBuilder } from '../BaseImplementationBuilder';
 
-import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast/common';
-import { ISwaggerMethod } from '../../definitions/swagger';
-import { ICallExpression } from '../../definitions/ast/function';
+import { BlockStatementBody, IIdentifier } from '../../../definitions/ast/common';
+import { ISwaggerMethod } from '../../../definitions/swagger';
+import { ICallExpression } from '../../../definitions/ast/function';
 
 export class _PostImplementationBuilder extends BaseImplementationBuilder {
   operation = 'post';
@@ -16,13 +16,10 @@ export class _PostImplementationBuilder extends BaseImplementationBuilder {
   }
 
   getArguments(url: string, operation: ISwaggerMethod): ICallExpression['arguments'] {
-    const apiUrl: ILiteral = {
-      type: 'Literal',
-      value: url,
-    };
+    const urlLiteral = this.getUrlLiteral(url);
 
     if (isEmpty(operation.parameters)) {
-      return [apiUrl];
+      return [urlLiteral];
     }
 
     const payload: IIdentifier = {
@@ -30,7 +27,7 @@ export class _PostImplementationBuilder extends BaseImplementationBuilder {
       name: 'payload',
     };
 
-    return [apiUrl, payload];
+    return [urlLiteral, payload];
   }
 }
 

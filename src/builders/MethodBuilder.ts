@@ -1,13 +1,13 @@
 import { isEmpty, last, keys, first, get } from 'lodash';
 
-import { GetImplementationBuilder } from './Implementation/GetImplementationBuilder';
-import { PostImplementationBuilder } from './Implementation/PostImplementationBuilder';
+import { GetImplementationBuilder } from './implementation/methods/GetImplementationBuilder';
+import { PostImplementationBuilder } from './implementation/methods/PostImplementationBuilder';
 
 import { ISwaggerMethod, ISwaggerMethodParam, ISwaggerOperations } from '../definitions/swagger';
 import { IMethodDefinition } from '../definitions/ast/method';
 import { IFunctionExpression } from '../definitions/ast/function';
 import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
-import { PutImplementationBuilder } from './Implementation/PutImplementationBuilder';
+import { PutImplementationBuilder } from './implementation/methods/PutImplementationBuilder';
 
 interface IMethodBuilder {
   buildMethod(api: string, operations: ISwaggerOperations): IMethodDefinition;

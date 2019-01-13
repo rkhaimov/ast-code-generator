@@ -22,7 +22,7 @@ export type ISwaggerOperations =
 
 export interface ISwaggerMethodParam {
   name: string;
-  in: string;
+  in: 'path' | 'query' | 'body';
   required: boolean;
   schema: ISwaggerModelRef | ISwaggerModel;
 }

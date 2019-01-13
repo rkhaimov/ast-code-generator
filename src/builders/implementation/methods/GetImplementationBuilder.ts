@@ -1,11 +1,11 @@
 import { isEmpty } from 'lodash';
 
-import { BaseImplementationBuilder } from './BaseImplementationBuilder';
+import { BaseImplementationBuilder } from '../BaseImplementationBuilder';
 
-import { ISwaggerMethod } from '../../definitions/swagger';
-import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast/common';
-import { ICallExpression } from '../../definitions/ast/function';
-import { ITemplateLiteral } from '../../definitions/ast/string';
+import { ISwaggerMethod } from '../../../definitions/swagger';
+import { BlockStatementBody, IIdentifier } from '../../../definitions/ast/common';
+import { ICallExpression } from '../../../definitions/ast/function';
+import { ITemplateLiteral } from '../../../definitions/ast/string';
 
 export class _GetImplementationBuilder extends BaseImplementationBuilder {
   operation = 'get';
@@ -18,20 +18,19 @@ export class _GetImplementationBuilder extends BaseImplementationBuilder {
 
   getArguments(url: string, operation: ISwaggerMethod): ICallExpression['arguments'] {
     if (isEmpty(operation.parameters)) {
-      const apiUrl: ILiteral = {
-        type: 'Literal',
-        value: url,
-      };
-
-      return [apiUrl];
+      return [this.getUrlLiteral(url)];
     }
 
+    return [this.getUrlQuery(url)];
+  }
+
+  getUrlQuery(url: string): ITemplateLiteral {
     const payload: IIdentifier = {
       type: 'Identifier',
       name: 'payload',
     };
 
-    const queryUrl: ITemplateLiteral = {
+    return {
       type: 'TemplateLiteral',
       expressions: [this.buildsThisCall('toQuery', [payload])],
       quasis: [
@@ -53,8 +52,6 @@ export class _GetImplementationBuilder extends BaseImplementationBuilder {
         },
       ],
     };
-
-    return [queryUrl];
   }
 }
 
