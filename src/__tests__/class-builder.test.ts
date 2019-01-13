@@ -1,5 +1,4 @@
-import pick from 'lodash/pick';
-import map from 'lodash/map';
+import { pick, map } from 'lodash';
 import * as escodegen from 'escodegen';
 
 import swaggerMock from './__mocks__/swagger.json';
@@ -27,7 +26,7 @@ describe('Class builder works well when', () => {
     expect(actualMethodNames).toEqual(expectedMethodNames);
   });
 
-  it('matches giving ast style', () => {
+  it('matches giving code style', () => {
     const code = escodegen.generate(ast);
 
     expect(code).toMatchSnapshot();

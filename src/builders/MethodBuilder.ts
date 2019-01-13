@@ -1,8 +1,4 @@
-import isEmpty from 'lodash/isEmpty';
-import last from 'lodash/last';
-import keys from 'lodash/keys';
-import first from 'lodash/first';
-import get from 'lodash/get';
+import { isEmpty, last, keys, first, get } from 'lodash';
 
 import { GetImplementationBuilder } from './Implementation/GetImplementationBuilder';
 import { PostImplementationBuilder } from './Implementation/PostImplementationBuilder';

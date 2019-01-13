@@ -6,10 +6,10 @@ exports[`Class builder works well when matches giving code style 1`] = `
         return this.get('/api/account');
     }
     signin(payload) {
-        return this.get('/api/account/signin');
+        return this.post('/api/account/signin', payload);
     }
     agreement(payload) {
-        return this.get('/api/agreement');
+        return this.get('/api/agreement', payload);
     }
 }"
 `;

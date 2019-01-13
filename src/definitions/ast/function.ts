@@ -13,7 +13,7 @@ export interface IFunctionExpression {
 export interface ICallExpression {
   type: 'CallExpression';
   callee: IMemberExpression;
-  arguments: ILiteral[];
+  arguments: Array<ILiteral | IIdentifier>;
 }
 
 export interface IReturnStatement {
