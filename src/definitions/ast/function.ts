@@ -1,4 +1,5 @@
 import { IBlockStatement, IIdentifier, ILiteral, IMemberExpression } from './common';
+import { ITemplateLiteral } from './string';
 
 export interface IFunctionExpression {
   type: 'FunctionExpression';
@@ -13,7 +14,7 @@ export interface IFunctionExpression {
 export interface ICallExpression {
   type: 'CallExpression';
   callee: IMemberExpression;
-  arguments: Array<ILiteral | IIdentifier>;
+  arguments: Array<ILiteral | IIdentifier | ITemplateLiteral>;
 }
 
 export interface IReturnStatement {

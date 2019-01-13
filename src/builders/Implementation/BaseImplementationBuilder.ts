@@ -1,28 +1,34 @@
-import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast/common';
+import { BlockStatementBody } from '../../definitions/ast/common';
 import { ISwaggerMethod } from '../../definitions/swagger';
-import { IReturnStatement } from '../../definitions/ast/function';
+import { ICallExpression, IReturnStatement } from '../../definitions/ast/function';
 
 export abstract class BaseImplementationBuilder {
   abstract buildImplementation(api: string, operation: ISwaggerMethod): BlockStatementBody;
 
-  buildThisCall(method: string, args: Array<ILiteral | IIdentifier>): IReturnStatement {
+  abstract getArguments(url: string, operation: ISwaggerMethod): ICallExpression['arguments'];
+
+  buildReturnStatetment(method: string, args: ICallExpression['arguments']): IReturnStatement {
     return {
       type: 'ReturnStatement',
-      argument: {
-        type: 'CallExpression',
-        callee: {
-          type: 'MemberExpression',
-          computed: false,
-          object: {
-            type: 'ThisExpression',
-          },
-          property: {
-            type: 'Identifier',
-            name: method,
-          },
+      argument: this.buildsThisCall(method, args),
+    };
+  }
+
+  buildsThisCall(method: string, args: ICallExpression['arguments']): ICallExpression {
+    return {
+      type: 'CallExpression',
+      callee: {
+        type: 'MemberExpression',
+        computed: false,
+        object: {
+          type: 'ThisExpression',
         },
-        arguments: args,
+        property: {
+          type: 'Identifier',
+          name: method,
+        },
       },
+      arguments: args,
     };
   }
 }

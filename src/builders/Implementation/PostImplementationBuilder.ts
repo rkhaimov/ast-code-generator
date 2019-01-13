@@ -8,7 +8,7 @@ import { ICallExpression } from '../../definitions/ast/function';
 
 class _PostImplementationBuilder extends BaseImplementationBuilder {
   buildImplementation(url: string, operation: ISwaggerMethod): BlockStatementBody {
-    const call = this.buildThisCall('post', this.getArguments(url, operation));
+    const call = this.buildReturnStatetment('post', this.getArguments(url, operation));
 
     return [call];
   }
