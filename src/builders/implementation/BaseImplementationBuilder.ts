@@ -1,10 +1,11 @@
 import { groupBy, isEmpty } from 'lodash';
 
 import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast/common';
-import { ISwaggerMethod } from '../../definitions/swagger';
+import { ISwaggerMethod, ISwaggerMethodParam } from '../../definitions/swagger';
 import { ICallExpression, IReturnStatement } from '../../definitions/ast/function';
 import { ArgumentsGroup, IOperationArguments } from '../../definitions/builders/implementation';
 import { ITemplateLiteral } from '../../definitions/ast/string';
+import { IArrayExpression } from '../../definitions/ast/array';
 
 export abstract class BaseImplementationBuilder {
   abstract operation: string;
@@ -16,11 +17,11 @@ export abstract class BaseImplementationBuilder {
   buildReturnStatement(method: string, args: ICallExpression['arguments']): IReturnStatement {
     return {
       type: 'ReturnStatement',
-      argument: this.buildsThisCall(method, args),
+      argument: this.buildThisCall(method, args),
     };
   }
 
-  protected buildsThisCall(method: string, args: ICallExpression['arguments']): ICallExpression {
+  protected buildThisCall(method: string, args: ICallExpression['arguments']): ICallExpression {
     return {
       type: 'CallExpression',
       callee: {
@@ -65,23 +66,27 @@ export abstract class BaseImplementationBuilder {
         }
 
         if (key === 'query') {
-          return { ...acc, query: this.buildQueryExpression() };
+          return { ...acc, query: this.buildQueryExpression(args) };
         }
 
         if (key === 'body') {
-          return { ...acc, body: this.buildPayloadIdentifier() };
+          return { ...acc, body: this.buildPick(args) };
         }
 
         return { ...acc, url: this.buildUrlPath(url) };
       }, { url } as IOperationArguments);
   }
 
-  protected buildQueryExpression(): ICallExpression {
-    return this.buildsThisCall('toQuery', [this.buildPayloadIdentifier()]);
+  protected buildQueryExpression(args: ISwaggerMethodParam[]): ICallExpression {
+    return this.buildThisCall('toQuery', [this.buildPick(args)]);
+  }
+
+  protected buildPick(args: ISwaggerMethodParam[]): ICallExpression {
+    return this.buildThisCall('pick', [this.buildPayloadIdentifier(), this.buildArrayOfArgs(args)]);
   }
 
   protected buildUrlPath(url: ILiteral): ICallExpression {
-    return this.buildsThisCall('fillPath', [url, this.buildPayloadIdentifier()]);
+    return this.buildThisCall('fillPath', [url, this.buildPayloadIdentifier()]);
   }
 
   protected buildTemplate(expressions: [ICallExpression | ILiteral, ICallExpression]): ITemplateLiteral {
@@ -102,6 +107,13 @@ export abstract class BaseImplementationBuilder {
         element,
         { ...element, tail: true },
       ],
+    };
+  }
+
+  private buildArrayOfArgs(args: ISwaggerMethodParam[]): IArrayExpression {
+    return {
+      type: 'ArrayExpression',
+      elements: args.map<ILiteral>((arg) => ({ type: 'Literal', value: arg.name })),
     };
   }
 

@@ -3,9 +3,8 @@ import { isEmpty, isNil } from 'lodash';
 import { BaseImplementationBuilder } from '../BaseImplementationBuilder';
 
 import { ISwaggerMethod } from '../../../definitions/swagger';
-import { BlockStatementBody, ILiteral } from '../../../definitions/ast/common';
+import { BlockStatementBody } from '../../../definitions/ast/common';
 import { ICallExpression } from '../../../definitions/ast/function';
-import { ITemplateLiteral } from '../../../definitions/ast/string';
 
 export class _GetImplementationBuilder extends BaseImplementationBuilder {
   operation = 'get';

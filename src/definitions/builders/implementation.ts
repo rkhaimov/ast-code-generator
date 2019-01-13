@@ -1,5 +1,5 @@
 import { ISwaggerMethodParam } from '../swagger';
-import { IIdentifier, ILiteral } from '../ast/common';
+import { ILiteral } from '../ast/common';
 import { ICallExpression } from '../ast/function';
 
 export type ArgumentsGroup = {
@@ -9,5 +9,5 @@ export type ArgumentsGroup = {
 export interface IOperationArguments {
   url: ILiteral | ICallExpression;
   query?: ICallExpression;
-  body?: IIdentifier;
+  body?: ICallExpression;
 }

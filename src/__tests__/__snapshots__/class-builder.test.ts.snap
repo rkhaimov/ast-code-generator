@@ -6,16 +6,25 @@ exports[`Class builder works well when matches giving code style 1`] = `
         return this.get('/api/account');
     }
     signin(payload) {
-        return this.post('/api/account/signin', payload);
+        return this.post('/api/account/signin', this.pick(payload, ['request']));
     }
     agreement(payload) {
-        return this.get(\`\${ '/api/agreement' }\${ this.toQuery(payload) }\`);
+        return this.get(\`\${ '/api/agreement' }\${ this.toQuery(this.pick(payload, [
+            'Initiator',
+            'DeadlineFrom',
+            'DeadlineTo',
+            'Title',
+            'CreatedFrom',
+            'CreatedTo',
+            'Status',
+            'AssignedTo'
+        ])) }\`);
     }
     details(payload) {
         return this.get(this.fillPath('/api/agreement/{id}/details', payload));
     }
     delegate(payload) {
-        return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), payload);
+        return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), this.pick(payload, ['request']));
     }
 }"
 `;
