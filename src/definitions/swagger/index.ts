@@ -52,7 +52,7 @@ interface ISwaggerModel {
   };
 }
 
-type SwaggerDefinitionPropertyTypes = ISwaggerString | ISwaggerInt | ISwaggerBoolean | ISwaggerArray;
+export type SwaggerDefinitionPropertyTypes = ISwaggerString | ISwaggerInt | ISwaggerBoolean | ISwaggerArray;
 
 interface ISwaggerPropertyTypeBase {
   readOnly?: boolean;
