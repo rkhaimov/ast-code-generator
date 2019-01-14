@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model builder works well when matches giving code style 1`] = `
+"interface IAccountInfo {
+    userName: string;
+    firstName: string;
+    lastName: string;
+}
+"
+`;
