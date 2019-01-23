@@ -6,5 +6,211 @@ exports[`Model builder works well when matches giving code style 1`] = `
     firstName: string;
     lastName: string;
 }
+
+interface ISignInRequestModel {
+    user: string;
+    password: string;
+}
+
+interface ISignInResponseModel {
+    success: boolean;
+    resultCode: string;
+    accessToken: string;
+    refreshToken: string;
+}
+
+interface IAgreementModel {
+    taskType: string;
+    initiator: string;
+    deadline: string;
+    status: string;
+    id: number;
+    title: string;
+    created: string;
+    creatorEmail: string;
+    creatorFirstName: string;
+    creatorLastName: string;
+    modified: string;
+    editor: string;
+    assignedTo: string;
+}
+
+interface ITaskCountModel {
+    kind: string;
+    count: number;
+}
+
+interface IDetailsAgreementModel {
+    taskType: string;
+    company: string;
+    signer: string;
+    signerEmail: string;
+    note: string;
+    initiator: string;
+    iniciatorEmail: string;
+    departmentBoss: string;
+    departmentBossEmail: string;
+    deadLine: string;
+    afterAgreement: string;
+    isSignAndSend: boolean;
+    sendAddress: string;
+    status: string;
+    commentary: string;
+    leadURL: string;
+    agreementNo: string;
+    docId: string;
+    agreementType: string;
+    department: string;
+    receiveDate: string;
+    project: string;
+    contractDate: string;
+    counterparty: string;
+    currency: string;
+    isRegisrty: boolean;
+    isSendToAgreement: boolean;
+    amount: string;
+    paymentPlan: boolean;
+    paymentStartDate: string;
+    paymentEndDate: string;
+    contractType: string;
+    mainAgreement: string;
+    attachments: array;
+    agreementTitle: string;
+    agreementStatus: string;
+    assignedToEmail: string;
+    agreementId: number;
+    editorEmail: string;
+    id: number;
+    title: string;
+    created: string;
+    creatorEmail: string;
+    creatorFirstName: string;
+    creatorLastName: string;
+    modified: string;
+    editor: string;
+    assignedTo: string;
+}
+
+interface IAttachment {
+    fileName: string;
+    linkUrl: string;
+}
+
+interface ITaskOutcome {
+    name: string;
+    description: string;
+}
+
+interface ITaskParticipant {
+    title: string;
+    userName: string;
+    position: string;
+    email: string;
+}
+
+interface IDelegateTaskModel {
+    userName: string;
+    comments: string;
+}
+
+interface IProcessingTaskModel {
+    outcomeName: string;
+    comments: string;
+}
+
+interface IOutsourcingJob {
+    taskType: string;
+    workflowName: string;
+    id: number;
+    title: string;
+    created: string;
+    creatorEmail: string;
+    creatorFirstName: string;
+    creatorLastName: string;
+    modified: string;
+    editor: string;
+    status: string;
+    assignedTo: string;
+}
+
+interface IProcessingJobTaskModel {
+    hours: number;
+    outcomeName: string;
+    comments: string;
+}
+
+interface IOvertimeJob {
+    taskType: string;
+    workflowName: string;
+    id: number;
+    title: string;
+    created: string;
+    creatorEmail: string;
+    creatorFirstName: string;
+    creatorLastName: string;
+    modified: string;
+    editor: string;
+    status: string;
+    assignedTo: string;
+}
+
+interface IPaymentRequest {
+    payUntilDate: string;
+    budgetCode: string;
+    currencyCode: string;
+    supplier: string;
+    paymentMethod: string;
+    invNo: string;
+    amount: number;
+    taskType: string;
+    id: number;
+    title: string;
+    created: string;
+    creatorEmail: string;
+    creatorFirstName: string;
+    creatorLastName: string;
+    modified: string;
+    editor: string;
+    status: string;
+    assignedTo: string;
+}
+
+interface ITaskModel {
+    id: number;
+    taskType: string;
+    title: string;
+    created: string;
+    creatorEmail: string;
+    creatorFirstName: string;
+    creatorLastName: string;
+    modified: string;
+    editor: string;
+}
+
+interface IAppUser {
+    userName: string;
+    surname: string;
+    password: string;
+}
+
+interface IUserListItem {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+interface IVacation {
+    taskType: string;
+    id: number;
+    title: string;
+    created: string;
+    creatorEmail: string;
+    creatorFirstName: string;
+    creatorLastName: string;
+    modified: string;
+    editor: string;
+    status: string;
+    assignedTo: string;
+}
 "
 `;

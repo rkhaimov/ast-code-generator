@@ -1,4 +1,5 @@
-import { Project, SourceFile } from 'ts-simple-ast';
+import { reduce } from 'lodash';
+import { InterfaceDeclarationStructure, Project, SourceFile } from 'ts-simple-ast';
 
 import { ModelBuilder } from '../builders/ModelBuilder';
 
@@ -8,16 +9,15 @@ import { ISwagger } from '../definitions/swagger';
 
 describe('Model builder works well when', () => {
   const project = new Project();
-  const models: SourceFile = project.createSourceFile('models');
+  const file: SourceFile = project.createSourceFile('models');
 
   it('matches giving code style', () => {
-    const model = ModelBuilder.buildModel(
-      'AccountInfo',
-      swaggerMock.definitions.AccountInfo as ISwagger['definitions'][string],
-    );
+    const models = reduce(swaggerMock.definitions, (acc, definition, name) => {
+      return acc.concat(ModelBuilder.buildModel(name, definition as ISwagger['definitions'][string]));
+    }, [] as InterfaceDeclarationStructure[]);
 
-    models.addInterface(model);
+    file.addInterfaces(models);
 
-    expect(models.getFullText()).toMatchSnapshot();
+    expect(file.getFullText()).toMatchSnapshot();
   });
 });
