@@ -1,26 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Model builder works well when matches giving code style 1`] = `
-"interface IAccountInfo {
+"export interface IAccountInfo {
     userName: string;
     firstName: string;
     lastName: string;
 }
 
-interface ISignInRequestModel {
+export interface ISignInRequestModel {
     user: string;
     password: string;
 }
 
-interface ISignInResponseModel {
+export interface ISignInResponseModel {
     success: boolean;
-    resultCode: string;
+    resultCode: 'Success' | 'InvalidLoginOrPassword';
     accessToken: string;
     refreshToken: string;
 }
 
-interface IAgreementModel {
-    taskType: string;
+export interface IAgreementModel {
+    taskType: 'AllTasks' | 'Unknown' | 'Vacation' | 'Outsourcing' | 'Overtime' | 'Agreement' | 'PaymentRequest';
     initiator: string;
     deadline: string;
     status: string;
@@ -35,13 +35,13 @@ interface IAgreementModel {
     assignedTo: string;
 }
 
-interface ITaskCountModel {
-    kind: string;
+export interface ITaskCountModel {
+    kind: 'AllTasks' | 'Unknown' | 'Vacation' | 'Outsourcing' | 'Overtime' | 'Agreement' | 'PaymentRequest';
     count: number;
 }
 
-interface IDetailsAgreementModel {
-    taskType: string;
+export interface IDetailsAgreementModel {
+    taskType: 'AllTasks' | 'Unknown' | 'Vacation' | 'Outsourcing' | 'Overtime' | 'Agreement' | 'PaymentRequest';
     company: string;
     signer: string;
     signerEmail: string;
@@ -74,7 +74,7 @@ interface IDetailsAgreementModel {
     paymentEndDate: string;
     contractType: string;
     mainAgreement: string;
-    attachments: array;
+    attachments: IAttachment[];
     agreementTitle: string;
     agreementStatus: string;
     assignedToEmail: string;
@@ -91,35 +91,35 @@ interface IDetailsAgreementModel {
     assignedTo: string;
 }
 
-interface IAttachment {
+export interface IAttachment {
     fileName: string;
     linkUrl: string;
 }
 
-interface ITaskOutcome {
+export interface ITaskOutcome {
     name: string;
     description: string;
 }
 
-interface ITaskParticipant {
+export interface ITaskParticipant {
     title: string;
     userName: string;
     position: string;
     email: string;
 }
 
-interface IDelegateTaskModel {
+export interface IDelegateTaskModel {
     userName: string;
     comments: string;
 }
 
-interface IProcessingTaskModel {
+export interface IProcessingTaskModel {
     outcomeName: string;
     comments: string;
 }
 
-interface IOutsourcingJob {
-    taskType: string;
+export interface IOutsourcingJob {
+    taskType: 'AllTasks' | 'Unknown' | 'Vacation' | 'Outsourcing' | 'Overtime' | 'Agreement' | 'PaymentRequest';
     workflowName: string;
     id: number;
     title: string;
@@ -133,14 +133,14 @@ interface IOutsourcingJob {
     assignedTo: string;
 }
 
-interface IProcessingJobTaskModel {
+export interface IProcessingJobTaskModel {
     hours: number;
     outcomeName: string;
     comments: string;
 }
 
-interface IOvertimeJob {
-    taskType: string;
+export interface IOvertimeJob {
+    taskType: 'AllTasks' | 'Unknown' | 'Vacation' | 'Outsourcing' | 'Overtime' | 'Agreement' | 'PaymentRequest';
     workflowName: string;
     id: number;
     title: string;
@@ -154,7 +154,7 @@ interface IOvertimeJob {
     assignedTo: string;
 }
 
-interface IPaymentRequest {
+export interface IPaymentRequest {
     payUntilDate: string;
     budgetCode: string;
     currencyCode: string;
@@ -162,7 +162,7 @@ interface IPaymentRequest {
     paymentMethod: string;
     invNo: string;
     amount: number;
-    taskType: string;
+    taskType: 'AllTasks' | 'Unknown' | 'Vacation' | 'Outsourcing' | 'Overtime' | 'Agreement' | 'PaymentRequest';
     id: number;
     title: string;
     created: string;
@@ -175,9 +175,9 @@ interface IPaymentRequest {
     assignedTo: string;
 }
 
-interface ITaskModel {
+export interface ITaskModel {
     id: number;
-    taskType: string;
+    taskType: 'AllTasks' | 'Unknown' | 'Vacation' | 'Outsourcing' | 'Overtime' | 'Agreement' | 'PaymentRequest';
     title: string;
     created: string;
     creatorEmail: string;
@@ -187,20 +187,20 @@ interface ITaskModel {
     editor: string;
 }
 
-interface IAppUser {
+export interface IAppUser {
     userName: string;
     surname: string;
     password: string;
 }
 
-interface IUserListItem {
+export interface IUserListItem {
     firstName: string;
     lastName: string;
     email: string;
 }
 
-interface IVacation {
-    taskType: string;
+export interface IVacation {
+    taskType: 'AllTasks' | 'Unknown' | 'Vacation' | 'Outsourcing' | 'Overtime' | 'Agreement' | 'PaymentRequest';
     id: number;
     title: string;
     created: string;
