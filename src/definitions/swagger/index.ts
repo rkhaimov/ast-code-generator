@@ -8,7 +8,7 @@ export interface ISwagger {
     [path: string]: ISwaggerOperations;
   };
   definitions: {
-    [model: string]: ISwaggerModel;
+    [model: string]: ISwaggerObject;
   };
   securityDefinitions: {};
   security: object[];
@@ -24,7 +24,7 @@ export interface ISwaggerMethodParam {
   name: string;
   in: 'path' | 'query' | 'body';
   required: boolean;
-  schema: ISwaggerModelRef | ISwaggerModel;
+  schema: ISwaggerModelRef | SwaggerDefinitionPropertyTypes;
 }
 
 export interface ISwaggerMethod {
@@ -36,7 +36,7 @@ export interface ISwaggerMethod {
   responses: {
     200: {
       description: string;
-      schema: ISwaggerModelRef | ISwaggerModel;
+      schema: ISwaggerModelRef | SwaggerDefinitionPropertyTypes;
     };
   };
 }
@@ -45,17 +45,21 @@ interface ISwaggerModelRef {
   $ref: string;
 }
 
-interface ISwaggerModel {
+export type SwaggerDefinitionPropertyTypes = ISwaggerString
+  | ISwaggerInt
+  | ISwaggerBoolean
+  | ISwaggerArray
+  | ISwaggerObject;
+
+interface ISwaggerPropertyTypeBase {
+  readOnly?: boolean;
+}
+
+interface ISwaggerObject {
   type: 'object';
   properties: {
     [property: string]: SwaggerDefinitionPropertyTypes;
   };
-}
-
-export type SwaggerDefinitionPropertyTypes = ISwaggerString | ISwaggerInt | ISwaggerBoolean | ISwaggerArray;
-
-interface ISwaggerPropertyTypeBase {
-  readOnly?: boolean;
 }
 
 interface ISwaggerString extends ISwaggerPropertyTypeBase {
@@ -76,5 +80,5 @@ interface ISwaggerBoolean extends ISwaggerPropertyTypeBase {
 interface ISwaggerArray extends ISwaggerPropertyTypeBase  {
   type: 'array';
   uniqueItems: boolean;
-  items: ISwaggerModelRef | ISwaggerModel;
+  items: ISwaggerModelRef | SwaggerDefinitionPropertyTypes;
 }

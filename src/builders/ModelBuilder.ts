@@ -22,7 +22,11 @@ class _ModelBuilder {
     };
   }
 
-  private toTsType(property: SwaggerDefinitionPropertyTypes): string {
+  getRefDefinitionName(ref: string): string {
+    return `I${last(ref.split('/'))}`;
+  }
+
+  toTsType(property: SwaggerDefinitionPropertyTypes): string {
     switch (property.type) {
       case 'integer': {
         return 'number';
@@ -47,10 +51,6 @@ class _ModelBuilder {
         return property.type;
       }
     }
-  }
-
-  private getRefDefinitionName(ref: string): string {
-    return `I${last(ref.split('/'))}`;
   }
 }
 

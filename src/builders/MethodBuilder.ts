@@ -8,6 +8,7 @@ import { PutImplementationBuilder } from './implementation/methods/PutImplementa
 
 import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
 import { ISwaggerMethod, ISwaggerMethodParam, ISwaggerOperations } from '../definitions/swagger';
+import { ModelBuilder } from './ModelBuilder';
 
 interface IMethodBuilder {
   buildMethod(api: string, operations: ISwaggerOperations, definitions: SourceFile): MethodDeclarationStructure;
@@ -23,7 +24,18 @@ class _MethodBuilder implements IMethodBuilder {
       name: methodName!,
       parameters: this.buildFunctionParams(method.parameters),
       bodyText: this.buildBodyText(api, operations),
+      returnType: this.getReturnType(method.responses),
     };
+  }
+
+  private getReturnType(response: ISwaggerMethod['responses']): string {
+    if ('$ref' in response['200'].schema) {
+      return `Promise<${ModelBuilder.getRefDefinitionName(response['200'].schema.$ref)}>`;
+    }
+
+    const type = ModelBuilder.toTsType(response['200'].schema);
+
+    return `Promise<${type}>`;
   }
 
   private buildBodyText(api: string, operations: ISwaggerOperations) {

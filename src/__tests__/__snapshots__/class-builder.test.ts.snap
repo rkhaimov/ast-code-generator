@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Class builder works well when matches giving code style 1`] = `
-"class AccountRepository extends RepositoryBase {
-    account() {
+"export class AccountRepository extends RepositoryBase {
+    account(): Promise<IAccountInfo> {
         return this.get('/api/account');
     }
 
-    signin(payload: Identifier) {
+    signin(payload: Identifier): Promise<ISignInResponseModel> {
         return this.post('/api/account/signin', this.pick(payload, ['request']));
     }
 
-    agreement(payload: Identifier) {
+    agreement(payload: Identifier): Promise<IAgreementModel[]> {
         return this.get(\`\${ '/api/agreement' }\${ this.toQuery(this.pick(payload, [
             'Initiator',
             'DeadlineFrom',
@@ -23,11 +23,11 @@ exports[`Class builder works well when matches giving code style 1`] = `
         ])) }\`);
     }
 
-    details(payload: Identifier) {
+    details(payload: Identifier): Promise<IDetailsAgreementModel> {
         return this.get(this.fillPath('/api/agreement/{id}/details', payload));
     }
 
-    delegate(payload: Identifier) {
+    delegate(payload: Identifier): Promise<'Unavailable' | 'Success' | 'CannotObtainLock' | 'InvalidUser' | 'Failed' | 'UndefinedError'> {
         return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), this.pick(payload, ['request']));
     }
 }
