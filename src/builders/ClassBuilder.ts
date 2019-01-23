@@ -1,37 +1,27 @@
 import { reduce } from 'lodash';
+import { ClassDeclarationStructure, MethodDeclarationStructure, SourceFile } from 'ts-simple-ast';
 
 import { MethodBuilder } from './MethodBuilder';
 
 import { ISwagger } from '../definitions/swagger';
-import { IMethodDefinition } from '../definitions/ast/method';
-import { IClassDeclaration } from '../definitions/ast/class';
 
 interface IClassBuilder {
-  build(name: string, methods: ISwagger['paths']): IClassDeclaration;
+  build(name: string, methods: ISwagger['paths'], definitions: SourceFile): ClassDeclarationStructure;
 }
 
 class _ClassBuilder implements IClassBuilder {
-  build(name: string, methods: ISwagger['paths']): IClassDeclaration {
+  build(name: string, methods: ISwagger['paths'], definitions: SourceFile): ClassDeclarationStructure {
     const body = reduce(methods, (acc, operation, api) => {
-      const method = MethodBuilder.buildMethod(api, operation);
+      const method = MethodBuilder.buildMethod(api, operation, definitions);
 
       return acc.concat(method);
-    }, [] as IMethodDefinition[]);
+    }, [] as MethodDeclarationStructure[]);
 
     return {
-      type: 'ClassDeclaration',
-      id: {
-        type: 'Identifier',
-        name: `${name}Repository`,
-      },
-      superClass: {
-        type: 'Identifier',
-        name: 'RepositoryBase', // TODO: Replace to ast name
-      },
-      body: {
-        type: 'ClassBody',
-        body,
-      },
+      name: `${name}Repository`,
+      extends: 'RepositoryBase',
+      methods: body,
+      isExported: true,
     };
   }
 }

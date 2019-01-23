@@ -1,51 +1,33 @@
 import { isEmpty, last, keys, first, get } from 'lodash';
+import { MethodDeclarationStructure, ParameterDeclarationStructure, SourceFile } from 'ts-simple-ast';
+import escodegen from 'escodegen';
 
 import { GetImplementationBuilder } from './implementation/methods/GetImplementationBuilder';
 import { PostImplementationBuilder } from './implementation/methods/PostImplementationBuilder';
-
-import { ISwaggerMethod, ISwaggerMethodParam, ISwaggerOperations } from '../definitions/swagger';
-import { IMethodDefinition } from '../definitions/ast/method';
-import { IFunctionExpression } from '../definitions/ast/function';
-import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
 import { PutImplementationBuilder } from './implementation/methods/PutImplementationBuilder';
 
+import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
+import { ISwaggerMethod, ISwaggerMethodParam, ISwaggerOperations } from '../definitions/swagger';
+
 interface IMethodBuilder {
-  buildMethod(api: string, operations: ISwaggerOperations): IMethodDefinition;
+  buildMethod(api: string, operations: ISwaggerOperations, definitions: SourceFile): MethodDeclarationStructure;
 }
 
 class _MethodBuilder implements IMethodBuilder {
-  buildMethod(api: string, operations: ISwaggerOperations): IMethodDefinition {
+  buildMethod(api: string, operations: ISwaggerOperations, definitions: SourceFile): MethodDeclarationStructure {
     const methodName = last<string>(api.split('/'));
-
-    return {
-      type: 'MethodDefinition',
-      kind: 'method',
-      static: false,
-      computed: false,
-      key: {
-        name: methodName!,
-        type: 'Identifier',
-      },
-      value: this.buildFunctionImplementation(api, operations),
-    };
-  }
-
-  private buildFunctionImplementation(api: string, operations: ISwaggerOperations): IFunctionExpression {
     const methods: string[] = keys(operations);
     const method: ISwaggerMethod = get(operations, first(methods)!);
 
     return {
-      type: 'FunctionExpression',
-      params: this.buildFunctionParams(method.parameters),
-      body: {
-        type: 'BlockStatement',
-        body: this.buildFunctionBody(api, operations),
-      },
-      async: false,
-      generator: false,
-      expression: false,
-      id: null,
+      name: methodName!,
+      parameters: this.buildFunctionParams(method.parameters),
+      bodyText: this.buildBodyText(api, operations),
     };
+  }
+
+  private buildBodyText(api: string, operations: ISwaggerOperations) {
+    return escodegen.generate(this.buildFunctionBody(api, operations));
   }
 
   private buildFunctionBody(api: string, operations: ISwaggerOperations): BlockStatementBody {
@@ -68,7 +50,7 @@ class _MethodBuilder implements IMethodBuilder {
     throw new Error(`Unknown operation(s) was provided ${keys(operations)}`);
   }
 
-  private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): IIdentifier[] {
+  private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): ParameterDeclarationStructure[] {
     if (isEmpty(swaggerParams)) {
       return [];
     }

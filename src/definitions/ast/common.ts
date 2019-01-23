@@ -12,7 +12,7 @@ export interface ILiteral {
 }
 
 export type BlockStatementBodyTypes = IReturnStatement;
-export type BlockStatementBody = BlockStatementBodyTypes[];
+export type BlockStatementBody = BlockStatementBodyTypes;
 
 export interface IBlockStatement {
   type: 'BlockStatement';

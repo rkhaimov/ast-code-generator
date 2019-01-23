@@ -10,9 +10,7 @@ export class _PostImplementationBuilder extends BaseImplementationBuilder {
   operation = 'post';
 
   buildImplementation(url: string, operation: ISwaggerMethod): BlockStatementBody {
-    const call = this.buildReturnStatement(this.operation, this.getArguments(url, operation));
-
-    return [call];
+    return this.buildReturnStatement(this.operation, this.getArguments(url, operation));
   }
 
   getArguments(apiUrl: string, operation: ISwaggerMethod): ICallExpression['arguments'] {

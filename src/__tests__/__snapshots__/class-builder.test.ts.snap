@@ -5,10 +5,12 @@ exports[`Class builder works well when matches giving code style 1`] = `
     account() {
         return this.get('/api/account');
     }
-    signin(payload) {
+
+    signin(payload: Identifier) {
         return this.post('/api/account/signin', this.pick(payload, ['request']));
     }
-    agreement(payload) {
+
+    agreement(payload: Identifier) {
         return this.get(\`\${ '/api/agreement' }\${ this.toQuery(this.pick(payload, [
             'Initiator',
             'DeadlineFrom',
@@ -20,11 +22,14 @@ exports[`Class builder works well when matches giving code style 1`] = `
             'AssignedTo'
         ])) }\`);
     }
-    details(payload) {
+
+    details(payload: Identifier) {
         return this.get(this.fillPath('/api/agreement/{id}/details', payload));
     }
-    delegate(payload) {
+
+    delegate(payload: Identifier) {
         return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), this.pick(payload, ['request']));
     }
-}"
+}
+"
 `;

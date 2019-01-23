@@ -1,5 +1,7 @@
 import { pick, map } from 'lodash';
-import * as escodegen from 'escodegen';
+import { Project, SourceFile } from 'ts-simple-ast';
+
+import { getMockDefinitionsFile } from './utils';
 
 import swaggerMock from './__mocks__/swagger.json';
 import methodsMock from './__mocks__/methods.json';
@@ -9,26 +11,15 @@ import { ClassBuilder } from '../builders/ClassBuilder';
 import { ISwagger } from '../definitions/swagger';
 
 describe('Class builder works well when', () => {
+  const project = new Project();
   const urls = map(methodsMock.methods, 'url');
   const paths = pick(swaggerMock.paths, urls);
-  const inClassName = 'Account';
-  const outClassName = 'AccountRepository';
-  const ast = ClassBuilder.build(inClassName, paths as ISwagger['paths']);
-
-  it('generates proper className', () => {
-    expect(ast.id.name).toEqual(outClassName);
-  });
-
-  it('creates all api methods with properNames', () => {
-    const actualMethodNames = map(ast.body.body, 'key.name');
-    const expectedMethodNames = map(methodsMock.methods, 'expectedName');
-
-    expect(actualMethodNames).toEqual(expectedMethodNames);
-  });
+  const definitions = getMockDefinitionsFile();
+  const file: SourceFile = project.createSourceFile('repositories');
 
   it('matches giving code style', () => {
-    const code = escodegen.generate(ast);
+    file.addClass(ClassBuilder.build('Account', paths as ISwagger['paths'], definitions));
 
-    expect(code).toMatchSnapshot();
+    expect(file.getFullText()).toMatchSnapshot();
   });
 });
