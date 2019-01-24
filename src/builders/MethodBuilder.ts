@@ -1,5 +1,5 @@
 import { isEmpty, last, keys, first, get } from 'lodash';
-import { MethodDeclarationStructure, ParameterDeclarationStructure, SourceFile } from 'ts-simple-ast';
+import { MethodDeclarationStructure, ParameterDeclarationStructure, SourceFile, ts } from 'ts-simple-ast';
 import escodegen from 'escodegen';
 
 import { GetImplementationBuilder } from './implementation/methods/GetImplementationBuilder';
@@ -9,6 +9,7 @@ import { PutImplementationBuilder } from './implementation/methods/PutImplementa
 import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
 import { ISwaggerMethod, ISwaggerMethodParam, ISwaggerOperations } from '../definitions/swagger';
 import { ModelBuilder } from './ModelBuilder';
+import { TsBuilder } from './TsBuilder';
 
 interface IMethodBuilder {
   buildMethod(api: string, operations: ISwaggerOperations, definitions: SourceFile): MethodDeclarationStructure;
@@ -30,12 +31,14 @@ class _MethodBuilder implements IMethodBuilder {
 
   private getReturnType(response: ISwaggerMethod['responses']): string {
     if ('$ref' in response['200'].schema) {
-      return `Promise<${ModelBuilder.getRefDefinitionName(response['200'].schema.$ref)}>`;
+      const name = ModelBuilder.getRefDefinitionName(response['200'].schema.$ref);
+
+      return TsBuilder.print(ts.createTypeReferenceNode('Promise', [ts.createTypeReferenceNode(name, [])]));
     }
 
     const type = ModelBuilder.toTsType(response['200'].schema);
 
-    return `Promise<${type}>`;
+    return TsBuilder.print(ts.createTypeReferenceNode('Promise', [ts.createTypeReferenceNode(type, [])]));
   }
 
   private buildBodyText(api: string, operations: ISwaggerOperations) {
