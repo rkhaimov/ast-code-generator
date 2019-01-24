@@ -1,4 +1,4 @@
-import { groupBy, isEmpty } from 'lodash';
+import { groupBy, isEmpty, first } from 'lodash';
 
 import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast/common';
 import { ISwaggerMethod, SwaggerMethodParam } from '../../definitions/swagger';
@@ -70,7 +70,9 @@ export abstract class BaseImplementationBuilder {
         }
 
         if (key === 'body') {
-          return { ...acc, body: this.buildPick(args) };
+          const arg = first(args)!;
+
+          return { ...acc, body: this.buildGet(arg) };
         }
 
         return { ...acc, url: this.buildUrlPath(url) };
@@ -79,6 +81,15 @@ export abstract class BaseImplementationBuilder {
 
   protected buildQueryExpression(args: SwaggerMethodParam[]): ICallExpression {
     return this.buildThisCall('toQuery', [this.buildPick(args)]);
+  }
+
+  protected buildGet(arg: SwaggerMethodParam): ICallExpression {
+    const key: ILiteral = {
+      type: 'Literal',
+      value: arg.name,
+    };
+
+    return this.buildThisCall('get', [this.buildPayloadIdentifier(), key]);
   }
 
   protected buildPick(args: SwaggerMethodParam[]): ICallExpression {
