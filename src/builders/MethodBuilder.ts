@@ -1,4 +1,4 @@
-import { isEmpty, last, keys, first, get, isNil } from 'lodash';
+import { isEmpty, last, keys, first, get, lowerFirst } from 'lodash';
 import { MethodDeclarationStructure, ParameterDeclarationStructure, SourceFile, ts } from 'ts-simple-ast';
 import escodegen from 'escodegen';
 
@@ -6,7 +6,7 @@ import { GetImplementationBuilder } from './implementation/methods/GetImplementa
 import { PostImplementationBuilder } from './implementation/methods/PostImplementationBuilder';
 import { PutImplementationBuilder } from './implementation/methods/PutImplementationBuilder';
 
-import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
+import { BlockStatementBody } from '../definitions/ast/common';
 import {
   ISwaggerMethod,
   SwaggerMethodParam,
@@ -81,7 +81,7 @@ class _MethodBuilder implements IMethodBuilder {
 
       return ts.createPropertySignature(
         [],
-        parameter.name,
+        lowerFirst(parameter.name),
         questionToken,
         ts.createTypeReferenceNode(typeName, []),
         undefined,

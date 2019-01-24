@@ -13,24 +13,24 @@ exports[`Class builder works well when matches giving code style 1`] = `
     }
 
     agreement(payload: {
-            Initiator?: string;
-            DeadlineFrom?: string;
-            DeadlineTo?: string;
-            Title?: string;
-            CreatedFrom?: string;
-            CreatedTo?: string;
-            Status?: string;
-            AssignedTo?: string;
+            initiator?: string;
+            deadlineFrom?: string;
+            deadlineTo?: string;
+            title?: string;
+            createdFrom?: string;
+            createdTo?: string;
+            status?: string;
+            assignedTo?: string;
         }): Promise<IAgreementModel[]> {
         return this.get(\`\${ '/api/agreement' }\${ this.toQuery(this.pick(payload, [
-            'Initiator',
-            'DeadlineFrom',
-            'DeadlineTo',
-            'Title',
-            'CreatedFrom',
-            'CreatedTo',
-            'Status',
-            'AssignedTo'
+            'initiator',
+            'deadlineFrom',
+            'deadlineTo',
+            'title',
+            'createdFrom',
+            'createdTo',
+            'status',
+            'assignedTo'
         ])) }\`);
     }
 

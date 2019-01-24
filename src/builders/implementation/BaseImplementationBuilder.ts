@@ -1,4 +1,4 @@
-import { groupBy, isEmpty, first } from 'lodash';
+import { groupBy, isEmpty, first, lowerFirst } from 'lodash';
 
 import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast/common';
 import { ISwaggerMethod, SwaggerMethodParam } from '../../definitions/swagger';
@@ -80,7 +80,9 @@ export abstract class BaseImplementationBuilder {
   }
 
   protected buildQueryExpression(args: SwaggerMethodParam[]): ICallExpression {
-    return this.buildThisCall('toQuery', [this.buildPick(args)]);
+    const lowerCasedArgs = args.map<SwaggerMethodParam>((arg) => ({ ...arg, name: lowerFirst(arg.name) }));
+
+    return this.buildThisCall('toQuery', [this.buildPick(lowerCasedArgs)]);
   }
 
   protected buildGet(arg: SwaggerMethodParam): ICallExpression {
