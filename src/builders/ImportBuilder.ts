@@ -1,18 +1,12 @@
 import { ImportDeclarationStructure } from 'ts-simple-ast';
-import { ProjectBuilder } from './ProjectBuilder';
+
+import { ProjectManager } from '../managers/ProjectManager';
 
 class _ImportBuilder {
-  importDefinitions(): ImportDeclarationStructure {
-    return {
-      namespaceImport: ProjectBuilder.FILE_NAMES.DEFINITIONS,
-      moduleSpecifier: `./${ProjectBuilder.FILE_NAMES.DEFINITIONS}`,
-    };
-  }
-
   importRepositoryBase(): ImportDeclarationStructure {
     return {
-      moduleSpecifier: `./${ProjectBuilder.FILE_NAMES.REPOSITORY_BASE}`,
-      namedImports: [{ name: ProjectBuilder.FILE_NAMES.REPOSITORY_BASE }],
+      moduleSpecifier: `./${ProjectManager.FILE_NAMES.REPOSITORY_BASE}`,
+      namedImports: [{ name: ProjectManager.FILE_NAMES.REPOSITORY_BASE }],
     };
   }
 }

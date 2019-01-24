@@ -7,7 +7,6 @@ describe('Import builder works well when', () => {
   const file: SourceFile = project.createSourceFile('imports');
 
   it('matches giving code style', () => {
-    file.addImportDeclaration(ImportBuilder.importDefinitions());
     file.addImportDeclaration(ImportBuilder.importRepositoryBase());
 
     expect(file.getFullText()).toMatchSnapshot();

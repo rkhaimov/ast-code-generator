@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Import builder works well when matches giving code style 1`] = `
+"import { RepositoryBase } from \\"./RepositoryBase\\";
+"
+`;
