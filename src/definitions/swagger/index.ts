@@ -20,11 +20,29 @@ export type ISwaggerOperations =
   | { delete: ISwaggerMethod }
   | { put: ISwaggerMethod };
 
-export interface ISwaggerMethodParam {
+export type SwaggerMethodParam = ISwaggerBodyParam | ISwaggerQueryParam | ISwaggerPathParam;
+
+interface ISwaggerParamBase {
   name: string;
-  in: 'path' | 'query' | 'body';
   required: boolean;
-  schema: ISwaggerModelRef | SwaggerDefinitionPropertyTypes;
+  description?: string;
+}
+
+interface ISwaggerBodyParam extends ISwaggerParamBase {
+  in: 'body';
+  schema: ISwaggerModelRef;
+}
+
+interface ISwaggerQueryParam extends ISwaggerParamBase {
+  in: 'query';
+  type: 'string';
+  format?: string;
+}
+
+interface ISwaggerPathParam extends ISwaggerParamBase {
+  in: 'path';
+  type: 'integer' | 'string';
+  format?: 'date-time' | 'int32';
 }
 
 export interface ISwaggerMethod {
@@ -32,7 +50,7 @@ export interface ISwaggerMethod {
   operationId: string;
   consumes: string[];
   produces: string[];
-  parameters: ISwaggerMethodParam[];
+  parameters: SwaggerMethodParam[];
   responses: {
     200: {
       description: string;
@@ -59,7 +77,7 @@ interface ISwaggerObject {
   type: 'object';
   properties: {
     [property: string]: SwaggerDefinitionPropertyTypes;
-  };
+  } | ISwaggerModelRef;
 }
 
 interface ISwaggerString extends ISwaggerPropertyTypeBase {

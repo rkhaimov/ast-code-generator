@@ -7,10 +7,10 @@ import { TsBuilder } from './TsBuilder';
 
 class _ModelBuilder {
   buildModel(model: string, definition: ISwagger['definitions'][string]): InterfaceDeclarationStructure {
-    const properties: InterfaceDeclarationStructure['properties'] = reduce(definition.properties, (acc, value: SwaggerDefinitionPropertyTypes, name) => {
+    const properties: InterfaceDeclarationStructure['properties'] = reduce(definition.properties, (acc, value, name) => {
       const property: PropertySignatureStructure = {
         name,
-        type: this.toTsType(value),
+        type: this.toTsType(value as SwaggerDefinitionPropertyTypes),
       };
 
       return (acc as InterfaceDeclarationStructure['properties'])!.concat(property);
@@ -49,6 +49,13 @@ class _ModelBuilder {
         const name = this.getRefDefinitionName(property.items.$ref);
 
         return TsBuilder.print(ts.createArrayTypeNode(ts.createTypeReferenceNode(name, [])));
+      }
+      case 'object': {
+        if (!('$ref' in property.properties)) {
+          throw new Error('Unrecognizable object swagger structure');
+        }
+
+        return this.getRefDefinitionName(property.properties.$ref as string);
       }
       default: {
         return property.type;

@@ -6,11 +6,22 @@ exports[`Class builder works well when matches giving code style 1`] = `
         return this.get('/api/account');
     }
 
-    signin(payload: Identifier): Promise<ISignInResponseModel> {
+    signin(payload: {
+            request?: ISignInRequestModel;
+        }): Promise<ISignInResponseModel> {
         return this.post('/api/account/signin', this.pick(payload, ['request']));
     }
 
-    agreement(payload: Identifier): Promise<IAgreementModel[]> {
+    agreement(payload: {
+            Initiator?: string;
+            DeadlineFrom?: string;
+            DeadlineTo?: string;
+            Title?: string;
+            CreatedFrom?: string;
+            CreatedTo?: string;
+            Status?: string;
+            AssignedTo?: string;
+        }): Promise<IAgreementModel[]> {
         return this.get(\`\${ '/api/agreement' }\${ this.toQuery(this.pick(payload, [
             'Initiator',
             'DeadlineFrom',
@@ -23,11 +34,16 @@ exports[`Class builder works well when matches giving code style 1`] = `
         ])) }\`);
     }
 
-    details(payload: Identifier): Promise<IDetailsAgreementModel> {
+    details(payload: {
+            id: string;
+        }): Promise<IDetailsAgreementModel> {
         return this.get(this.fillPath('/api/agreement/{id}/details', payload));
     }
 
-    delegate(payload: Identifier): Promise<'Unavailable' | 'Success' | 'CannotObtainLock' | 'InvalidUser' | 'Failed' | 'UndefinedError'> {
+    delegate(payload: {
+            id: string;
+            request?: IDelegateTaskModel;
+        }): Promise<\\"Unavailable\\" | \\"Success\\" | \\"CannotObtainLock\\" | \\"InvalidUser\\" | \\"Failed\\" | \\"UndefinedError\\"> {
         return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), this.pick(payload, ['request']));
     }
 }

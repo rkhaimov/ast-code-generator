@@ -1,4 +1,4 @@
-import { isEmpty, last, keys, first, get } from 'lodash';
+import { isEmpty, last, keys, first, get, isNil } from 'lodash';
 import { MethodDeclarationStructure, ParameterDeclarationStructure, SourceFile, ts } from 'ts-simple-ast';
 import escodegen from 'escodegen';
 
@@ -7,7 +7,12 @@ import { PostImplementationBuilder } from './implementation/methods/PostImplemen
 import { PutImplementationBuilder } from './implementation/methods/PutImplementationBuilder';
 
 import { BlockStatementBody, IIdentifier } from '../definitions/ast/common';
-import { ISwaggerMethod, ISwaggerMethodParam, ISwaggerOperations } from '../definitions/swagger';
+import {
+  ISwaggerMethod,
+  SwaggerMethodParam,
+  ISwaggerOperations,
+  SwaggerDefinitionPropertyTypes,
+} from '../definitions/swagger';
 import { ModelBuilder } from './ModelBuilder';
 import { TsBuilder } from './TsBuilder';
 
@@ -65,17 +70,58 @@ class _MethodBuilder implements IMethodBuilder {
     throw new Error(`Unknown operation(s) was provided ${keys(operations)}`);
   }
 
-  private buildFunctionParams(swaggerParams: ISwaggerMethodParam[]): ParameterDeclarationStructure[] {
+  private buildFunctionParams(swaggerParams: SwaggerMethodParam[]): ParameterDeclarationStructure[] {
     if (isEmpty(swaggerParams)) {
       return [];
     }
 
-    const param = {
+    const literalTypeNodes = swaggerParams.map<ts.TypeElement>((parameter) => {
+      const typeName = ModelBuilder.toTsType(this.convertToSwaggerDefinition(parameter));
+      const questionToken = parameter.required ? undefined : ts.createToken(ts.SyntaxKind.QuestionToken);
+
+      return ts.createPropertySignature(
+        [],
+        parameter.name,
+        questionToken,
+        ts.createTypeReferenceNode(typeName, []),
+        undefined,
+      );
+    });
+
+    const param: ParameterDeclarationStructure = {
       name: 'payload',
-      type: 'Identifier',
+      type: TsBuilder.print(ts.createTypeLiteralNode(literalTypeNodes)),
     };
 
-    return [param as IIdentifier];
+    return [param];
+  }
+
+  private convertToSwaggerDefinition(param: SwaggerMethodParam): SwaggerDefinitionPropertyTypes {
+    switch (param.in) {
+      case 'body': {
+        return {
+          type: 'object',
+          properties: param.schema,
+        };
+      }
+      case 'path': {
+        return {
+          ...param as SwaggerDefinitionPropertyTypes,
+          type: 'string',
+          format: param.format === 'int32' ? undefined : param.format,
+        };
+      }
+      case 'query': {
+        return param as SwaggerDefinitionPropertyTypes;
+      }
+      default: {
+        return this.throwIfNever(param, '');
+      }
+    }
+  }
+
+  private throwIfNever(arg: never, message: string): never {
+    throw new Error(message);
   }
 }
 

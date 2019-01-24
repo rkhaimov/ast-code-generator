@@ -1,9 +1,9 @@
-import { ISwaggerMethodParam } from '../swagger';
+import { SwaggerMethodParam } from '../swagger';
 import { ILiteral } from '../ast/common';
 import { ICallExpression } from '../ast/function';
 
 export type ArgumentsGroup = {
-  [P in ISwaggerMethodParam['in']]: ISwaggerMethodParam[];
+  [P in SwaggerMethodParam['in']]: SwaggerMethodParam[];
 };
 
 export interface IOperationArguments {

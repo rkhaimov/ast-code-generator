@@ -1,7 +1,7 @@
 import { groupBy, isEmpty } from 'lodash';
 
 import { BlockStatementBody, IIdentifier, ILiteral } from '../../definitions/ast/common';
-import { ISwaggerMethod, ISwaggerMethodParam } from '../../definitions/swagger';
+import { ISwaggerMethod, SwaggerMethodParam } from '../../definitions/swagger';
 import { ICallExpression, IReturnStatement } from '../../definitions/ast/function';
 import { ArgumentsGroup, IOperationArguments } from '../../definitions/builders/implementation';
 import { ITemplateLiteral } from '../../definitions/ast/string';
@@ -77,11 +77,11 @@ export abstract class BaseImplementationBuilder {
       }, { url } as IOperationArguments);
   }
 
-  protected buildQueryExpression(args: ISwaggerMethodParam[]): ICallExpression {
+  protected buildQueryExpression(args: SwaggerMethodParam[]): ICallExpression {
     return this.buildThisCall('toQuery', [this.buildPick(args)]);
   }
 
-  protected buildPick(args: ISwaggerMethodParam[]): ICallExpression {
+  protected buildPick(args: SwaggerMethodParam[]): ICallExpression {
     return this.buildThisCall('pick', [this.buildPayloadIdentifier(), this.buildArrayOfArgs(args)]);
   }
 
@@ -110,7 +110,7 @@ export abstract class BaseImplementationBuilder {
     };
   }
 
-  private buildArrayOfArgs(args: ISwaggerMethodParam[]): IArrayExpression {
+  private buildArrayOfArgs(args: SwaggerMethodParam[]): IArrayExpression {
     return {
       type: 'ArrayExpression',
       elements: args.map<ILiteral>((arg) => ({ type: 'Literal', value: arg.name })),
