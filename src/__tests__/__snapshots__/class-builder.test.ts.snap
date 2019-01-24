@@ -9,7 +9,7 @@ exports[`Class builder works well when matches giving code style 1`] = `
     signin(payload: {
             request?: ISignInRequestModel;
         }): Promise<ISignInResponseModel> {
-        return this.post('/api/account/signin', this.get(payload, 'request'));
+        return this.post('/api/account/signin', this.getProperty(payload, 'request'));
     }
 
     agreement(payload: {
@@ -44,7 +44,7 @@ exports[`Class builder works well when matches giving code style 1`] = `
             id: string;
             request?: IDelegateTaskModel;
         }): Promise<\\"Unavailable\\" | \\"Success\\" | \\"CannotObtainLock\\" | \\"InvalidUser\\" | \\"Failed\\" | \\"UndefinedError\\"> {
-        return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), this.get(payload, 'request'));
+        return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), this.getProperty(payload, 'request'));
     }
 
     logout(): Promise<void> {

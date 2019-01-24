@@ -72,7 +72,7 @@ export abstract class BaseImplementationBuilder {
         if (key === 'body') {
           const arg = first(args)!;
 
-          return { ...acc, body: this.buildGet(arg) };
+          return { ...acc, body: this.buildPropertyGet(arg) };
         }
 
         return { ...acc, url: this.buildUrlPath(url) };
@@ -85,13 +85,13 @@ export abstract class BaseImplementationBuilder {
     return this.buildThisCall('toQuery', [this.buildPick(lowerCasedArgs)]);
   }
 
-  protected buildGet(arg: SwaggerMethodParam): ICallExpression {
+  protected buildPropertyGet(arg: SwaggerMethodParam): ICallExpression {
     const key: ILiteral = {
       type: 'Literal',
       value: arg.name,
     };
 
-    return this.buildThisCall('get', [this.buildPayloadIdentifier(), key]);
+    return this.buildThisCall('getProperty', [this.buildPayloadIdentifier(), key]);
   }
 
   protected buildPick(args: SwaggerMethodParam[]): ICallExpression {
