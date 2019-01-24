@@ -48,7 +48,7 @@ class _ModelBuilder {
 
         const name = this.getRefDefinitionName(property.items.$ref);
 
-        return `${name}[]`;
+        return TsBuilder.print(ts.createArrayTypeNode(ts.createTypeReferenceNode(name, [])));
       }
       default: {
         return property.type;
