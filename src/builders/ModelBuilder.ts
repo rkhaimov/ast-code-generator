@@ -1,8 +1,9 @@
 /* tslint:disable:max-line-length */
 import { reduce, last } from 'lodash';
-import { InterfaceDeclarationStructure, PropertySignatureStructure } from 'ts-simple-ast';
+import { InterfaceDeclarationStructure, PropertySignatureStructure, ts } from 'ts-simple-ast';
 
 import { ISwagger, SwaggerDefinitionPropertyTypes } from '../definitions/swagger';
+import { TsBuilder } from './TsBuilder';
 
 class _ModelBuilder {
   buildModel(model: string, definition: ISwagger['definitions'][string]): InterfaceDeclarationStructure {
@@ -33,7 +34,9 @@ class _ModelBuilder {
       }
       case 'string': {
         if (property.enum) {
-          return property.enum.map((value) => `'${value}'`).join(' | ');
+          const literalTypeNodes = property.enum.map((text) => ts.createLiteralTypeNode(ts.createLiteral(text)));
+
+          return TsBuilder.print(ts.createUnionTypeNode(literalTypeNodes));
         }
 
         return 'string';
