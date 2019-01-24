@@ -1,5 +1,5 @@
-import { isEmpty, last, keys, first, get, lowerFirst } from 'lodash';
-import { MethodDeclarationStructure, ParameterDeclarationStructure, SourceFile, ts } from 'ts-simple-ast';
+import { isEmpty, last, keys, first, get, lowerFirst, isNil } from 'lodash';
+import { MethodDeclarationStructure, ParameterDeclarationStructure, ts } from 'ts-simple-ast';
 import escodegen from 'escodegen';
 
 import { GetImplementationBuilder } from './implementation/methods/GetImplementationBuilder';
@@ -17,11 +17,11 @@ import { ModelBuilder } from './ModelBuilder';
 import { TsBuilder } from './TsBuilder';
 
 interface IMethodBuilder {
-  buildMethod(api: string, operations: ISwaggerOperations, definitions: SourceFile): MethodDeclarationStructure;
+  buildMethod(api: string, operations: ISwaggerOperations): MethodDeclarationStructure;
 }
 
 class _MethodBuilder implements IMethodBuilder {
-  buildMethod(api: string, operations: ISwaggerOperations, definitions: SourceFile): MethodDeclarationStructure {
+  buildMethod(api: string, operations: ISwaggerOperations): MethodDeclarationStructure {
     const methodName = last<string>(api.split('/'));
     const methods: string[] = keys(operations);
     const method: ISwaggerMethod = get(operations, first(methods)!);
@@ -35,6 +35,10 @@ class _MethodBuilder implements IMethodBuilder {
   }
 
   private getReturnType(response: ISwaggerMethod['responses']): string {
+    if (isNil(response['200'].schema)) {
+      return TsBuilder.print(ts.createTypeReferenceNode('Promise', [ts.createTypeReferenceNode('void', [])]));
+    }
+
     if ('$ref' in response['200'].schema) {
       const name = ModelBuilder.getRefDefinitionName(response['200'].schema.$ref);
 

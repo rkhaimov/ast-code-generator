@@ -19,6 +19,10 @@
     {
       "url": "/api/outsourcing/{id}/delegate",
       "expectedName": "delegate"
+    },
+    {
+      "url": "/api/account/logout",
+      "expectedName": "logout"
     }
   ]
 }

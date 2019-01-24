@@ -1,12 +1,18 @@
-import { reduce } from 'lodash';
-import { InterfaceDeclarationStructure, Project, SourceFile } from 'ts-simple-ast';
+/* tslint:disable:max-line-length */
 import path from 'path';
+import { reduce, first, keys, get, set, each } from 'lodash';
+import { InterfaceDeclarationStructure, Project, SourceFile } from 'ts-simple-ast';
 
 import { ModelBuilder } from '../builders/ModelBuilder';
+import { ClassBuilder } from '../builders/ClassBuilder';
 
 import swagger from '../__tests__/__mocks__/swagger.json';
 
-import { ISwagger } from '../definitions/swagger';
+import { ISwagger, ISwaggerMethod, ISwaggerOperations } from '../definitions/swagger';
+
+interface IPathGroups {
+  [name: string]: ISwagger['paths'];
+}
 
 export class ProjectManager {
   static FILE_NAMES = {
@@ -26,6 +32,7 @@ export class ProjectManager {
     );
 
     this.createDefinitions();
+    this.createClasses();
 
     this.project.save()
       .then(() => console.log('Saved!'));
@@ -37,5 +44,19 @@ export class ProjectManager {
     }, [] as InterfaceDeclarationStructure[]);
 
     this.file.addInterfaces(models);
+  }
+
+  private createClasses() {
+    const repositories: IPathGroups = reduce(swagger.paths as any as ISwagger['paths'], (acc, api: ISwaggerOperations, url) => {
+      const operations = keys(api);
+      const method: ISwaggerMethod = get(api, first(operations)!);
+      const name = first(method.tags)!;
+
+      set(acc, `${name}.${url}`, api);
+
+      return acc;
+    }, {} as IPathGroups);
+
+    each(repositories, (paths, name) => this.file.addClass(ClassBuilder.build(name, paths)));
   }
 }

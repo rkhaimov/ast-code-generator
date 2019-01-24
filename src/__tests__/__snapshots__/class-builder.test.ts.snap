@@ -46,6 +46,10 @@ exports[`Class builder works well when matches giving code style 1`] = `
         }): Promise<\\"Unavailable\\" | \\"Success\\" | \\"CannotObtainLock\\" | \\"InvalidUser\\" | \\"Failed\\" | \\"UndefinedError\\"> {
         return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), this.get(payload, 'request'));
     }
+
+    logout(): Promise<void> {
+        return this.post('/api/account/logout');
+    }
 }
 "
 `;
