@@ -28,7 +28,15 @@ export abstract class BaseImplementationBuilder {
         type: 'MemberExpression',
         computed: false,
         object: {
-          type: 'ThisExpression',
+          type: 'MemberExpression',
+          object: {
+            type: 'ThisExpression',
+          },
+          computed: false,
+          property: {
+            type: 'Identifier',
+            name: 'source',
+          },
         },
         property: {
           type: 'Identifier',

@@ -3,13 +3,13 @@
 exports[`Class builder works well when matches giving code style 1`] = `
 "export class AccountRepository extends RepositoryBase {
     account(): Promise<IAccountInfo> {
-        return this.get('/api/account');
+        return this.source.get('/api/account');
     }
 
     signin(payload: {
             request?: ISignInRequestModel;
         }): Promise<ISignInResponseModel> {
-        return this.post('/api/account/signin', this.getProperty(payload, 'request'));
+        return this.source.post('/api/account/signin', this.source.getProperty(payload, 'request'));
     }
 
     agreement(payload: {
@@ -22,7 +22,7 @@ exports[`Class builder works well when matches giving code style 1`] = `
             status?: string;
             assignedTo?: string;
         }): Promise<IAgreementModel[]> {
-        return this.get(\`\${ '/api/agreement' }\${ this.toQuery(this.pick(payload, [
+        return this.source.get(\`\${ '/api/agreement' }\${ this.source.toQuery(this.source.pick(payload, [
             'initiator',
             'deadlineFrom',
             'deadlineTo',
@@ -37,18 +37,18 @@ exports[`Class builder works well when matches giving code style 1`] = `
     details(payload: {
             id: string;
         }): Promise<IDetailsAgreementModel> {
-        return this.get(this.fillPath('/api/agreement/{id}/details', payload));
+        return this.source.get(this.source.fillPath('/api/agreement/{id}/details', payload));
     }
 
     delegate(payload: {
             id: string;
             request?: IDelegateTaskModel;
         }): Promise<\\"Unavailable\\" | \\"Success\\" | \\"CannotObtainLock\\" | \\"InvalidUser\\" | \\"Failed\\" | \\"UndefinedError\\"> {
-        return this.post(this.fillPath('/api/outsourcing/{id}/delegate', payload), this.getProperty(payload, 'request'));
+        return this.source.post(this.source.fillPath('/api/outsourcing/{id}/delegate', payload), this.source.getProperty(payload, 'request'));
     }
 
     logout(): Promise<void> {
-        return this.post('/api/account/logout');
+        return this.source.post('/api/account/logout');
     }
 }
 "

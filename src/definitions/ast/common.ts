@@ -21,7 +21,7 @@ export interface IBlockStatement {
 
 export interface IMemberExpression {
   type: 'MemberExpression';
-  object: IThisExpression;
+  object: IThisExpression | IMemberExpression;
   computed: false;
   property: IIdentifier;
 }
