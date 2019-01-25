@@ -1,12 +1,20 @@
 import { reduce } from 'lodash';
-import { ClassDeclarationStructure, MethodDeclarationStructure } from 'ts-simple-ast';
+import {
+  ClassDeclarationStructure,
+  MethodDeclarationStructure,
+  ts,
+  VariableDeclarationKind,
+  VariableStatementStructure,
+} from 'ts-simple-ast';
 
 import { MethodBuilder } from './MethodBuilder';
 
 import { ISwagger } from '../definitions/swagger';
+import { TsBuilder } from './TsBuilder';
 
 interface IClassBuilder {
   build(name: string, methods: ISwagger['paths']): ClassDeclarationStructure;
+  buildAssignment(name: string): VariableStatementStructure;
 }
 
 class _ClassBuilder implements IClassBuilder {
@@ -18,11 +26,30 @@ class _ClassBuilder implements IClassBuilder {
     }, [] as MethodDeclarationStructure[]);
 
     return {
-      name: `${name}Repository`,
+      name: this.getClassName(name),
       extends: 'RepositoryBase',
       methods: body,
       isExported: true,
     };
+  }
+
+  buildAssignment(name: string): VariableStatementStructure {
+    const newExpression = ts.createNew(ts.createIdentifier(this.getClassName(name)), [], []);
+
+    return {
+      declarationKind: VariableDeclarationKind.Const,
+      declarations: [
+        {
+          name: `${name}Repository`,
+          initializer: TsBuilder.print(newExpression),
+        },
+      ],
+      isExported: true,
+    };
+  }
+
+  private getClassName(name: string): string {
+    return `${name}RepositoryClass`;
   }
 }
 

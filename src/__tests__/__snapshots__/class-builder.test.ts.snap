@@ -1,7 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Class builder works well when adds proper export assignments 1`] = `
+"export const AccountRepository = new AccountRepositoryClass();
+"
+`;
+
 exports[`Class builder works well when matches giving code style 1`] = `
-"export class AccountRepository extends RepositoryBase {
+"export class AccountRepositoryClass extends RepositoryBase {
     account(): Promise<IAccountInfo> {
         return this.source.get('/api/account');
     }

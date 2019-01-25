@@ -12,10 +12,19 @@ describe('Class builder works well when', () => {
   const project = new Project();
   const urls = map(methodsMock.methods, 'url');
   const paths = pick(swaggerMock.paths, urls);
-  const file: SourceFile = project.createSourceFile('repositories');
 
   it('matches giving code style', () => {
+    const file: SourceFile = project.createSourceFile('repositories');
+
     file.addClass(ClassBuilder.build('Account', paths as ISwagger['paths']));
+
+    expect(file.getFullText()).toMatchSnapshot();
+  });
+
+  it('adds proper export assignments', () => {
+    const file: SourceFile = project.createSourceFile('exports');
+
+    file.addVariableStatement(ClassBuilder.buildAssignment('Account'));
 
     expect(file.getFullText()).toMatchSnapshot();
   });
