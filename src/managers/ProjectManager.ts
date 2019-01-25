@@ -1,5 +1,6 @@
 /* tslint:disable:max-line-length */
 import path from 'path';
+import fs from 'fs';
 import { reduce, first, keys, get, set, each } from 'lodash';
 import { InterfaceDeclarationStructure, Project, SourceFile } from 'ts-simple-ast';
 
@@ -17,8 +18,9 @@ interface IPathGroups {
 export class ProjectManager {
   static FILE_NAMES = {
     ROOT: 'generated',
-    API: 'api',
+    INDEX: 'index',
     REPOSITORY_BASE: 'RepositoryBase',
+    SHARED_ROOT: path.join(__dirname, '..', '..', 'src', 'shared'),
   };
 
   project!: Project;
@@ -26,16 +28,28 @@ export class ProjectManager {
 
   createProject() {
     this.project = new Project();
-
-    this.file = this.project.createSourceFile(
-      path.join(ProjectManager.FILE_NAMES.ROOT, `${ProjectManager.FILE_NAMES.API}.ts`),
-    );
+    this.file = this.createRootFile();
 
     this.createDefinitions();
     this.createClasses();
 
     this.project.save()
       .then(() => console.log('Saved!'));
+  }
+
+  private createRootFile(): SourceFile {
+    const body = fs.readdirSync(ProjectManager.FILE_NAMES.SHARED_ROOT)
+        .reduce((acc: string, file) => {
+          const source = this.project.addExistingSourceFile(path.join(ProjectManager.FILE_NAMES.SHARED_ROOT, file));
+          const { bodyText } = source.getStructure();
+
+          return acc.concat(bodyText as string);
+        }, '');
+
+    return this.project.createSourceFile(
+        path.join(ProjectManager.FILE_NAMES.ROOT, `${ProjectManager.FILE_NAMES.INDEX}.ts`),
+        { bodyText: body },
+    );
   }
 
   private createDefinitions() {
