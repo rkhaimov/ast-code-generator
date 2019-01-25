@@ -1,8 +1,8 @@
 /* tslint:disable:max-line-length */
 import path from 'path';
 import fs from 'fs';
-import { reduce, first, keys, get, set, each } from 'lodash';
-import { InterfaceDeclarationStructure, Project, SourceFile } from 'ts-simple-ast';
+import { each, first, get, keys, reduce, set } from 'lodash';
+import { InterfaceDeclarationStructure, Project, SourceFile, ts } from 'ts-simple-ast';
 
 import { ModelBuilder } from '../builders/ModelBuilder';
 import { ClassBuilder } from '../builders/ClassBuilder';
@@ -31,6 +31,7 @@ export class ProjectManager {
       compilerOptions: {
         outDir: path.resolve(__dirname, '..', '..', ProjectManager.FILE_NAMES.ROOT),
         declaration: true,
+        target: ts.ScriptTarget.ES5,
       },
     });
 
