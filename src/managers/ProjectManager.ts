@@ -27,14 +27,19 @@ export class ProjectManager {
   file!: SourceFile;
 
   createProject() {
-    this.project = new Project();
+    this.project = new Project({
+      compilerOptions: {
+        outDir: path.resolve(__dirname, '..', '..', ProjectManager.FILE_NAMES.ROOT),
+        declaration: true,
+      },
+    });
+
     this.file = this.createRootFile();
 
     this.createDefinitions();
     this.createClasses();
 
-    this.project.save()
-      .then(() => console.log('Saved!'));
+    this.project.emit();
   }
 
   private createRootFile(): SourceFile {
@@ -43,13 +48,12 @@ export class ProjectManager {
           const source = this.project.addExistingSourceFile(path.join(ProjectManager.FILE_NAMES.SHARED_ROOT, file));
           const { bodyText } = source.getStructure();
 
+          this.project.removeSourceFile(source);
+
           return acc.concat(bodyText as string);
         }, '');
 
-    return this.project.createSourceFile(
-        path.join(ProjectManager.FILE_NAMES.ROOT, `${ProjectManager.FILE_NAMES.INDEX}.ts`),
-        { bodyText: body },
-    );
+    return this.project.createSourceFile(`${ProjectManager.FILE_NAMES.INDEX}.ts`, { bodyText: body });
   }
 
   private createDefinitions() {
