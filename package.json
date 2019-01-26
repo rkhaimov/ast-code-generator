@@ -1,8 +1,9 @@
 {
   "name": "ast-code-generator",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Generated api which is ready for usage",
+  "main": "generated/index.js",
+  "types": "generated/index.d.ts",
   "scripts": {
     "start": "compile",
     "test": "jest",
